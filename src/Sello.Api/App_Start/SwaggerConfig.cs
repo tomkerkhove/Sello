@@ -255,7 +255,7 @@ namespace Sello.Api
 
         private static string GetXmlCommentsPath()
         {
-            return HostingEnvironment.MapPath("~/Docs/SwissRe.Pni.Api.xml");
+            return HostingEnvironment.MapPath("~/Docs/Sello.Api.xml");
         }
     }
 }
