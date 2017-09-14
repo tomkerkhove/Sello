@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sello.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Sello.Api.Controllers.ProductsController.Get">
+            <summary>
+                Gets a list of all products
+            </summary>
+        </member>
+    </members>
+</doc>
