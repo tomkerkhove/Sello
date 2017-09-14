@@ -4,8 +4,6 @@ using Sello.Api;
 using Swashbuckle.Application;
 using System.Web.Hosting;
 
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
-
 namespace Sello.Api
 {
     public class SwaggerConfig
