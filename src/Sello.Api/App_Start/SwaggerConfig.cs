@@ -4,8 +4,6 @@ using Sello.Api;
 using Swashbuckle.Application;
 using System.Web.Hosting;
 
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
-
 namespace Sello.Api
 {
     public class SwaggerConfig
@@ -33,7 +31,10 @@ namespace Sello.Api
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "Sello API");
+                        c.SingleApiVersion("v1", "Sello API")
+                            .Description("APIs exposed by the Sello platform")
+                            .Contact(contactBuilder => contactBuilder.Name("Tom Kerkhove").Url("https://github.com/tomkerkhove/sello"))
+                            .License(licenseBuilder => licenseBuilder.Name("MIT License").Url("https://github.com/tomkerkhove/sello/blob/master/LICENSE"));
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
