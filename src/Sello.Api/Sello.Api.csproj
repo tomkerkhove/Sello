@@ -118,7 +118,8 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="OwinStartup.cs" />
+    <Compile Include="Owin\ExceptionHandling\OwinExceptionHandler.cs" />
+    <Compile Include="Owin\OwinStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

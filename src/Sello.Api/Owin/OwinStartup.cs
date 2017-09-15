@@ -2,10 +2,11 @@
 using System.Web.Http.ExceptionHandling;
 using Microsoft.Owin;
 using Owin;
-using Sello.Api;
+using Sello.Api.Owin;
+using Sello.Api.Owin.ExceptionHandling;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
-namespace Sello.Api
+namespace Sello.Api.Owin
 {
     public class OwinStartup
     {
@@ -27,7 +28,7 @@ namespace Sello.Api
 
         private void ConfigureExceptionHandling(HttpConfiguration httpConfiguration)
         {
-           
+            httpConfiguration.Services.Replace(typeof(IExceptionHandler), new OwinExceptionHandler());
         }
 
         private void ConfigureSwagger()
