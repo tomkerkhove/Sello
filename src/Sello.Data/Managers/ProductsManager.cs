@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Sello.Data.Repositories;
+using Sello.Domain.Model;
 
 namespace Sello.Data.Managers
 {
@@ -7,9 +10,22 @@ namespace Sello.Data.Managers
     {
         private readonly ProductsRepository _productsRepository = new ProductsRepository();
 
-        public List<string> Get()
+        public async Task<List<Product>> GetAsync()
         {
-            return _productsRepository.Get();
+            var products = await _productsRepository.GetAsync();
+            return products.Select(MapDatabaseToDomain).ToList();
+        }
+
+        private static Product MapDatabaseToDomain(Datastore.SQL.Model.Product productRow)
+        {
+            var product = new Product
+            {
+                Name = productRow.Name,
+                Description = productRow.Description,
+                Price = productRow.Price
+            };
+
+            return product;
         }
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{79BA7F3D-8067-44CC-B335-232DDA941EAB}</ProjectGuid>
+    <ProjectGuid>{B60F1243-D5FA-46A9-80D2-FF4AEF81DBAF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sello.Data</RootNamespace>
-    <AssemblyName>Sello.Data</AssemblyName>
+    <RootNamespace>Sello.Domain</RootNamespace>
+    <AssemblyName>Sello.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,19 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Managers\ProductsManager.cs" />
+    <Compile Include="Model\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ProductsRepository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sello.Datastore.SQL\Sello.Datastore.SQL.csproj">
-      <Project>{f90792e1-e9d3-4248-8a8a-4e2f91d325f8}</Project>
-      <Name>Sello.Datastore.SQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sello.Domain\Sello.Domain.csproj">
-      <Project>{b60f1243-d5fa-46a9-80d2-ff4aef81dbaf}</Project>
-      <Name>Sello.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

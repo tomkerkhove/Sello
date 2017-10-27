@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Threading.Tasks;
+using Sello.Datastore.SQL;
+using Sello.Datastore.SQL.Model;
 
 namespace Sello.Data.Repositories
 {
     public class ProductsRepository
     {
-        public List<string> Get()
+        private readonly PlatformDatabaseContext _databaseContext = new PlatformDatabaseContext();
+
+        public async Task<List<Product>> GetAsync()
         {
-            return new List<string>
-            {
-                "Xbox One",
-                "Surface Hub"
-            };
+            var products = await _databaseContext.Products.ToListAsync();
+            return products;
         }
     }
 }
