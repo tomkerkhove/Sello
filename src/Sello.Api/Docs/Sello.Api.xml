@@ -4,6 +4,26 @@
         <name>Sello.Api</name>
     </assembly>
     <members>
+        <member name="T:Sello.Api.Contracts.ProductContract">
+            <summary>
+                Information concerning a product that is being offered
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductContract.Name">
+            <summary>
+                Name of the product
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductContract.Description">
+            <summary>
+                Description about the product
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductContract.Price">
+            <summary>
+                Price for buying the product
+            </summary>
+        </member>
         <member name="M:Sello.Api.Controllers.ProductsController.Get">
             <summary>
                 Gets a list of all products

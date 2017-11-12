@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Sello.Data.Repositories;
 using Sello.Domain.Model;
 
@@ -13,19 +14,7 @@ namespace Sello.Data.Managers
         public async Task<List<Product>> GetAsync()
         {
             var products = await _productsRepository.GetAsync();
-            return products.Select(MapDatabaseToDomain).ToList();
-        }
-
-        private static Product MapDatabaseToDomain(Datastore.SQL.Model.Product productRow)
-        {
-            var product = new Product
-            {
-                Name = productRow.Name,
-                Description = productRow.Description,
-                Price = productRow.Price
-            };
-
-            return product;
+            return products.Select(Mapper.Map<Product>).ToList();
         }
     }
 }
