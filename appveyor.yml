@@ -26,3 +26,9 @@ build:
   parallel: true
   project: src/Sello.sln
   verbosity: minimal
+
+# test solution
+test:
+  categories:
+    only:
+    - Unit
