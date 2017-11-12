@@ -15,7 +15,7 @@ namespace Sello.Datastore.SQL.Migrations
         {
             var xbox = new Product
             {
-                Name = "Xbox One",
+                Name = "Xbox One X",
                 Description = "Microsoft's latest gaming console",
                 Price = 599
             };
