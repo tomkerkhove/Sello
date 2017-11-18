@@ -16,5 +16,11 @@ namespace Sello.Data.Managers
             var products = await _productsRepository.GetAsync();
             return products.Select(Mapper.Map<Product>).ToList();
         }
+
+        public async Task<Product> GetAsync(int productId)
+        {
+            var products = await _productsRepository.GetAsync();
+            return products.Select(Mapper.Map<Product>).ToList().First();
+        }
     }
 }

@@ -29,5 +29,15 @@
                 Gets a list of all products
             </summary>
         </member>
+        <member name="M:Sello.Api.Controllers.ProductsController.Get(System.Int32)">
+            <summary>
+                Gets a list of all products
+            </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.ProductsController.Post(Sello.Api.Contracts.ProductContract)">
+            <summary>
+                Add a new product to the catalog a list of all products
+            </summary>
+        </member>
     </members>
 </doc>
