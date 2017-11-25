@@ -151,10 +151,6 @@
       <Project>{79ba7f3d-8067-44cc-b335-232dda941eab}</Project>
       <Name>Sello.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sello.Domain\Sello.Domain.csproj">
-      <Project>{b60f1243-d5fa-46a9-80d2-ff4aef81dbaf}</Project>
-      <Name>Sello.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
