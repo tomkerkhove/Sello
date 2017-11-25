@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sello.Datastore.SQL.Model;
 
 namespace Sello.Api.Contracts.Mapping
 {
@@ -8,8 +9,12 @@ namespace Sello.Api.Contracts.Mapping
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Sello.Datastore.SQL.Model.Product, Sello.Domain.Model.Product>();
-                cfg.CreateMap<Sello.Domain.Model.Product, Sello.Api.Contracts.ProductContract>();
+                cfg.CreateMap<Product, ProductContract>()
+                    .ForSourceMember(product => product.Id, memberCfg => memberCfg.Ignore())
+                    .ForSourceMember(product => product.Orders, memberCfg => memberCfg.Ignore());
+                cfg.CreateMap<ProductContract, Product>()
+                    .ForMember(product => product.Id, memberOptions => memberOptions.Ignore())
+                    .ForMember(product => product.Orders, memberOptions => memberOptions.Ignore());
             });
 
             Mapper.AssertConfigurationIsValid();

@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Sello.Domain.Model;
+using Sello.Api.Contracts;
 
 namespace Sello.Tests.Integration
 {
@@ -25,7 +25,7 @@ namespace Sello.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var rawContent = await response.Content.ReadAsStringAsync();
-            var products = JsonConvert.DeserializeObject<List<Product>>(rawContent);
+            var products = JsonConvert.DeserializeObject<List<ProductContract>>(rawContent);
             Assert.NotNull(products);
         }
     }

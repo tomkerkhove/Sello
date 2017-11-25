@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mappings\ContractMappingTests.cs" />
-    <Compile Include="Mappings\DomainMappingTests.cs" />
     <Compile Include="Mappings\MappingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,10 +66,6 @@
     <ProjectReference Include="..\Sello.Datastore.SQL\Sello.Datastore.SQL.csproj">
       <Project>{f90792e1-e9d3-4248-8a8a-4e2f91d325f8}</Project>
       <Name>Sello.Datastore.SQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sello.Domain\Sello.Domain.csproj">
-      <Project>{b60f1243-d5fa-46a9-80d2-ff4aef81dbaf}</Project>
-      <Name>Sello.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

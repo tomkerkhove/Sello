@@ -64,10 +64,6 @@
       <Project>{dfd26f95-919a-4ca0-9d03-89ebf91454c3}</Project>
       <Name>Sello.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sello.Domain\Sello.Domain.csproj">
-      <Project>{B60F1243-D5FA-46A9-80D2-FF4AEF81DBAF}</Project>
-      <Name>Sello.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

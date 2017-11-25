@@ -2,12 +2,11 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.UI;
 using AutoMapper;
 using Sello.Api.Contracts;
-using Sello.Data.Managers;
+using Sello.Data.Repositories;
+using Sello.Datastore.SQL.Model;
 using Swashbuckle.Swagger.Annotations;
 
 namespace Sello.Api.Controllers
@@ -15,7 +14,7 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class ProductsController : ApiController
     {
-        private readonly ProductsManager _productsManager = new ProductsManager();
+        private readonly ProductsRepository _productsRepository = new ProductsRepository();
 
         /// <summary>
         ///     Gets a list of all products
@@ -27,7 +26,7 @@ namespace Sello.Api.Controllers
             "The request could not be completed successfully, please try again.")]
         public async Task<IHttpActionResult> Get()
         {
-            var storedProducts = await _productsManager.GetAsync();
+            var storedProducts = await _productsRepository.GetAsync();
 
             var products = storedProducts.Select(Mapper.Map<ProductContract>);
 
@@ -40,11 +39,14 @@ namespace Sello.Api.Controllers
         [HttpGet]
         [Route("products/{productId}")]
         [SwaggerResponse(HttpStatusCode.OK, "Details about a product", typeof(ProductContract))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Product not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
         public async Task<IHttpActionResult> Get(int productId)
         {
-            var storedProduct = await _productsManager.GetAsync(productId);
+            var storedProduct = await _productsRepository.GetAsync(productId);
+            if (storedProduct == null)
+                return NotFound();
 
             var product = Mapper.Map<ProductContract>(storedProduct);
 
@@ -58,13 +60,14 @@ namespace Sello.Api.Controllers
         [Route("products")]
         [SwaggerResponse(HttpStatusCode.Created, "A list of all products", typeof(ProductContract))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "No valid product was specified.")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "The request could not be completed successfully, please try again.")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError,
+            "The request could not be completed successfully, please try again.")]
         public async Task<IHttpActionResult> Post(ProductContract newProduct)
         {
-            await Task.CompletedTask;
+            var product = Mapper.Map<Product>(newProduct);
+            var storedProduct = await _productsRepository.AddAsync(product);
 
-            var resourceLocation = ComposeResourceLocation(1);
-
+            var resourceLocation = ComposeResourceLocation(storedProduct.Id);
             return Created(resourceLocation, newProduct);
         }
 
