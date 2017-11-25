@@ -8,5 +8,6 @@ namespace Sello.Datastore.SQL.Model
         public string ConfirmationId { get; set; }
         public virtual List<Product> Products { get; set; }
         public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
