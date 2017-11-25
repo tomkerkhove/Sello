@@ -24,6 +24,11 @@
                 Price for buying the product
             </summary>
         </member>
+        <member name="M:Sello.Api.Controllers.OrdersController.Post(Sello.Api.Contracts.OrderContract)">
+            <summary>
+                Creates a new order
+            </summary>
+        </member>
         <member name="M:Sello.Api.Controllers.ProductsController.Get">
             <summary>
                 Gets a list of all products
@@ -38,6 +43,12 @@
             <summary>
                 Add a new product to the catalog a list of all products
             </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.RestApiController.ComposeResourceLocation(System.String)">
+            <summary>
+                Creates the URI for a specific resource
+            </summary>
+            <param name="resourceId">Identifier of a resource</param>
         </member>
     </members>
 </doc>

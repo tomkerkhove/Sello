@@ -116,14 +116,21 @@
     <Content Include="Docs\Sello.Api.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Contracts\CustomerContract.cs" />
     <Compile Include="Contracts\Mapping\ContractMapper.cs" />
+    <Compile Include="Contracts\OrderConfirmationContract.cs" />
+    <Compile Include="Contracts\OrderContract.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Contracts\ProductContract.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\RestApiController.cs" />
     <Compile Include="Owin\ExceptionHandling\OwinExceptionHandler.cs" />
     <Compile Include="Owin\OwinStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

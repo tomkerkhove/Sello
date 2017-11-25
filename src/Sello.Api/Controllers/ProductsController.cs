@@ -12,7 +12,7 @@ using Swashbuckle.Swagger.Annotations;
 namespace Sello.Api.Controllers
 {
     [RoutePrefix("api/v1")]
-    public class ProductsController : ApiController
+    public class ProductsController : RestApiController
     {
         private readonly ProductsRepository _productsRepository = new ProductsRepository();
 
@@ -67,13 +67,8 @@ namespace Sello.Api.Controllers
             var product = Mapper.Map<Product>(newProduct);
             var storedProduct = await _productsRepository.AddAsync(product);
 
-            var resourceLocation = ComposeResourceLocation(storedProduct.Id);
+            var resourceLocation = ComposeResourceLocation(storedProduct.Id.ToString());
             return Created(resourceLocation, newProduct);
-        }
-
-        private string ComposeResourceLocation(int resourceId)
-        {
-            return $"{Request.RequestUri.OriginalString}/{resourceId}";
         }
     }
 }
