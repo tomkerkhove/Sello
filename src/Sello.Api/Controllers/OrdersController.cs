@@ -33,7 +33,7 @@ namespace Sello.Api.Controllers
             {
                 ConfirmationId = confirmationId,
                 Customer = order.Customer,
-                Products = order.Products
+                Items = order.Items
             };
 
             var resourceUri = ComposeResourceLocation(confirmationId);

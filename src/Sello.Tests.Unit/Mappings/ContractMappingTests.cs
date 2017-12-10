@@ -43,8 +43,8 @@ namespace Sello.Tests.Unit.Mappings
             const string customerFirstName = "John";
             const string customerLastName = "Doe";
             const string customerEmailAddress = "john.doe@sello.io";
-            const string productName = "Xbox One X";
-            const string productDescription = "Microsoft's latest gaming console";
+            var productId = Guid.NewGuid().ToString();
+            const int orderItemAmount = 2;
             const double productPrice = 599;
             var customerContract = new CustomerContract
             {
@@ -52,16 +52,18 @@ namespace Sello.Tests.Unit.Mappings
                 LastName = customerLastName,
                 EmailAddress = customerEmailAddress
             };
-            var productContract = new ProductContract
+            var orderItemContract = new OrderItemContract
             {
-                Name = productName,
-                Description = productDescription,
-                Price = productPrice
+                Amount = orderItemAmount,
+                Price = productPrice,
+                ProductId = productId
             };
+
             var orderContract = new OrderContract
             {
                 Customer = customerContract,
-                Products = new List<ProductContract> {productContract}
+                TotalAmount = orderItemAmount * productPrice,
+                Items = new List<OrderItemContract> { orderItemContract }
             };
 
             // Act
@@ -70,14 +72,12 @@ namespace Sello.Tests.Unit.Mappings
             // Assert
             Assert.NotNull(order);
             Assert.NotNull(order.Customer);
-            Assert.NotNull(order.Products);
+            Assert.NotNull(order.Items);
             Assert.AreEqual(customerFirstName, order.Customer.FirstName);
             Assert.AreEqual(customerLastName, order.Customer.LastName);
             Assert.AreEqual(customerEmailAddress, order.Customer.EmailAddress);
-            var product = order.Products.First();
-            Assert.AreEqual(productName, product.Name);
-            Assert.AreEqual(productDescription, product.Description);
-            Assert.AreEqual(productPrice, product.Price);
+            var orderItem = order.Items.First();
+            Assert.AreEqual(orderItemAmount, orderItem.Amount);
         }
 
         [Test]
