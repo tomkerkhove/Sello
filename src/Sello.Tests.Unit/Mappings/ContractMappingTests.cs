@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using NUnit.Framework;
@@ -11,54 +12,6 @@ namespace Sello.Tests.Unit.Mappings
     [Category("Unit")]
     public class ContractMappingTests : MappingTest
     {
-        [Test]
-        public void Product_MapFromDbEntityToContract_Succeeds()
-        {
-            // Arrange
-            const string productName = "Xbox One X";
-            const string productDescription = "Microsoft's latest gaming console";
-            const double productPrice = 599;
-            var databaseProduct = new Product
-            {
-                Name = productName,
-                Description = productDescription,
-                Price = productPrice
-            };
-
-            // Act
-            var product = Mapper.Map<ProductContract>(databaseProduct);
-
-            // Assert
-            Assert.NotNull(product);
-            Assert.AreEqual(productName, product.Name);
-            Assert.AreEqual(productDescription, product.Description);
-            Assert.AreEqual(productPrice, product.Price);
-        }
-
-        [Test]
-        public void Product_MapFromContractToDbEntity_Succeeds()
-        {
-            // Arrange
-            const string productName = "Xbox One X";
-            const string productDescription = "Microsoft's latest gaming console";
-            const double productPrice = 599;
-            var productContract = new ProductContract
-            {
-                Name = productName,
-                Description = productDescription,
-                Price = productPrice
-            };
-
-            // Act
-            var product = Mapper.Map<Product>(productContract);
-
-            // Assert
-            Assert.NotNull(product);
-            Assert.AreEqual(productName, product.Name);
-            Assert.AreEqual(productDescription, product.Description);
-            Assert.AreEqual(productPrice, product.Price);
-        }
-
         [Test]
         public void Customer_MapFromContractToDbEntity_Succeeds()
         {
@@ -108,7 +61,7 @@ namespace Sello.Tests.Unit.Mappings
             var orderContract = new OrderContract
             {
                 Customer = customerContract,
-                Products = new List<ProductContract> { productContract }
+                Products = new List<ProductContract> {productContract}
             };
 
             // Act
@@ -122,6 +75,57 @@ namespace Sello.Tests.Unit.Mappings
             Assert.AreEqual(customerLastName, order.Customer.LastName);
             Assert.AreEqual(customerEmailAddress, order.Customer.EmailAddress);
             var product = order.Products.First();
+            Assert.AreEqual(productName, product.Name);
+            Assert.AreEqual(productDescription, product.Description);
+            Assert.AreEqual(productPrice, product.Price);
+        }
+
+        [Test]
+        public void Product_MapFromContractToDbEntity_Succeeds()
+        {
+            // Arrange
+            const string productName = "Xbox One X";
+            const string productDescription = "Microsoft's latest gaming console";
+            const double productPrice = 599;
+            var productContract = new ProductContract
+            {
+                Name = productName,
+                Description = productDescription,
+                Price = productPrice
+            };
+
+            // Act
+            var product = Mapper.Map<Product>(productContract);
+
+            // Assert
+            Assert.NotNull(product);
+            Assert.AreEqual(productName, product.Name);
+            Assert.AreEqual(productDescription, product.Description);
+            Assert.AreEqual(productPrice, product.Price);
+        }
+
+        [Test]
+        public void Product_MapFromDbEntityToContract_Succeeds()
+        {
+            // Arrange
+            const string productName = "Xbox One X";
+            const string productDescription = "Microsoft's latest gaming console";
+            const double productPrice = 599;
+            var productId = Guid.NewGuid().ToString();
+            var databaseProduct = new Product
+            {
+                ExternalId = productId,
+                Name = productName,
+                Description = productDescription,
+                Price = productPrice
+            };
+
+            // Act
+            var product = Mapper.Map<ProductContract>(databaseProduct);
+
+            // Assert
+            Assert.NotNull(product);
+            Assert.AreEqual(productId, product.Id);
             Assert.AreEqual(productName, product.Name);
             Assert.AreEqual(productDescription, product.Description);
             Assert.AreEqual(productPrice, product.Price);

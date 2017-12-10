@@ -10,9 +10,11 @@ namespace Sello.Api.Contracts.Mapping
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Product, ProductContract>()
+                    .ForMember(product => product.Id, memberOptions => memberOptions.MapFrom(databaseEntity => databaseEntity.ExternalId))
                     .ForSourceMember(product => product.Id, memberCfg => memberCfg.Ignore())
                     .ForSourceMember(product => product.Orders, memberCfg => memberCfg.Ignore());
                 cfg.CreateMap<ProductContract, Product>()
+                    .ForMember(product => product.ExternalId, memberOptions => memberOptions.MapFrom(contract => contract.Id))
                     .ForMember(product => product.Id, memberOptions => memberOptions.Ignore())
                     .ForMember(product => product.Orders, memberOptions => memberOptions.Ignore());
                 cfg.CreateMap<OrderContract, Order>()

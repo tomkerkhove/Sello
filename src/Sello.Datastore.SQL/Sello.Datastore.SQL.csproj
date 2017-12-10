@@ -52,6 +52,10 @@
     <Compile Include="Migrations\201711252156242_AddRelationshipBetweenOrdersAndCustomers.Designer.cs">
       <DependentUpon>201711252156242_AddRelationshipBetweenOrdersAndCustomers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712101824255_IntroduceExternalIdForProduct.cs" />
+    <Compile Include="Migrations\201712101824255_IntroduceExternalIdForProduct.Designer.cs">
+      <DependentUpon>201712101824255_IntroduceExternalIdForProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Order.cs" />
@@ -73,6 +77,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711252156242_AddRelationshipBetweenOrdersAndCustomers.resx">
       <DependentUpon>201711252156242_AddRelationshipBetweenOrdersAndCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712101824255_IntroduceExternalIdForProduct.resx">
+      <DependentUpon>201712101824255_IntroduceExternalIdForProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

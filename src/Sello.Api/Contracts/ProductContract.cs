@@ -9,6 +9,12 @@ namespace Sello.Api.Contracts
     public class ProductContract
     {
         /// <summary>
+        ///     Id of the product
+        /// </summary>
+        [DataMember]
+        public string Id { get; set; }
+
+        /// <summary>
         ///     Name of the product
         /// </summary>
         [DataMember]

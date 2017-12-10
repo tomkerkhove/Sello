@@ -9,6 +9,11 @@
                 Information concerning a product that is being offered
             </summary>
         </member>
+        <member name="P:Sello.Api.Contracts.ProductContract.Id">
+            <summary>
+                Id of the product
+            </summary>
+        </member>
         <member name="P:Sello.Api.Contracts.ProductContract.Name">
             <summary>
                 Name of the product
