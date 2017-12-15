@@ -17,7 +17,7 @@ namespace Sello.Tests.Integration
         public async Task Products_ListAllProducts_ShouldReturnHttpOk()
         {
             // Arrange
-            const string productsUrl = "products";
+            const string productsUrl = "product";
 
             // Act
             var response = await _selloService.GetResponseAsync(productsUrl);
