@@ -12,15 +12,13 @@ namespace Sello.Datastore.SQL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
+            // Define default schema
             modelBuilder.HasDefaultSchema("platform");
             
+            // Define table structure
             modelBuilder.Entity<Order>().HasKey(order => order.Id);
             modelBuilder.Entity<Order>().Property(order => order.ConfirmationId).IsRequired();
-            //modelBuilder.Entity<Order>().HasRequired(order => order.Product).WithMany()
-            //    .HasForeignKey(order => order.ProductId);
-            //modelBuilder.Entity<Order>().HasRequired(order => order.Customer).WithMany()
-            //    .HasForeignKey(order => order.CustomerId);
 
             modelBuilder.Entity<Product>().HasKey(product => product.Id);
             modelBuilder.Entity<Product>().Property(product => product.ExternalId).IsRequired();
