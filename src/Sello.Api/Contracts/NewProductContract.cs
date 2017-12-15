@@ -3,17 +3,11 @@
 namespace Sello.Api.Contracts
 {
     /// <summary>
-    ///     Information concerning a product that is being offered
+    ///     Information concerning a new product that is being added to the catalog
     /// </summary>
     [DataContract]
-    public class ProductContract
+    public class NewProductContract
     {
-        /// <summary>
-        ///     Id of the product
-        /// </summary>
-        [DataMember]
-        public string Id { get; set; }
-
         /// <summary>
         ///     Name of the product
         /// </summary>

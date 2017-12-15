@@ -4,27 +4,47 @@
         <name>Sello.Api</name>
     </assembly>
     <members>
-        <member name="T:Sello.Api.Contracts.ProductContract">
+        <member name="T:Sello.Api.Contracts.NewProductContract">
             <summary>
-                Information concerning a product that is being offered
+                Information concerning a new product that is being added to the catalog
             </summary>
         </member>
-        <member name="P:Sello.Api.Contracts.ProductContract.Id">
-            <summary>
-                Id of the product
-            </summary>
-        </member>
-        <member name="P:Sello.Api.Contracts.ProductContract.Name">
+        <member name="P:Sello.Api.Contracts.NewProductContract.Name">
             <summary>
                 Name of the product
             </summary>
         </member>
-        <member name="P:Sello.Api.Contracts.ProductContract.Description">
+        <member name="P:Sello.Api.Contracts.NewProductContract.Description">
             <summary>
                 Description about the product
             </summary>
         </member>
-        <member name="P:Sello.Api.Contracts.ProductContract.Price">
+        <member name="P:Sello.Api.Contracts.NewProductContract.Price">
+            <summary>
+                Price for buying the product
+            </summary>
+        </member>
+        <member name="T:Sello.Api.Contracts.ProductInformationContract">
+            <summary>
+                Information concerning a product that is being offered
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductInformationContract.Id">
+            <summary>
+                Id of the product
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductInformationContract.Name">
+            <summary>
+                Name of the product
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductInformationContract.Description">
+            <summary>
+                Description about the product
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Contracts.ProductInformationContract.Price">
             <summary>
                 Price for buying the product
             </summary>
@@ -39,12 +59,12 @@
                 Gets a list of all products
             </summary>
         </member>
-        <member name="M:Sello.Api.Controllers.ProductsController.Get(System.Int32)">
+        <member name="M:Sello.Api.Controllers.ProductsController.Get(System.String)">
             <summary>
                 Gets the details for a specific product in the catalog
             </summary>
         </member>
-        <member name="M:Sello.Api.Controllers.ProductsController.Post(Sello.Api.Contracts.ProductContract)">
+        <member name="M:Sello.Api.Controllers.ProductsController.Post(Sello.Api.Contracts.NewProductContract)">
             <summary>
                 Add a new product to the catalog a list of all products
             </summary>

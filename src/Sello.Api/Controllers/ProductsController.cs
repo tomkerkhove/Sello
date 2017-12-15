@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -21,14 +22,14 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("product")]
-        [SwaggerResponse(HttpStatusCode.OK, "A list of all products", typeof(List<ProductContract>))]
+        [SwaggerResponse(HttpStatusCode.OK, "A list of all products", typeof(List<ProductInformationContract>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
         public async Task<IHttpActionResult> Get()
         {
             var storedProducts = await _productsRepository.GetAsync();
 
-            var products = storedProducts.Select(Mapper.Map<ProductContract>);
+            var products = storedProducts.Select(Mapper.Map<ProductInformationContract>);
 
             return Ok(products);
         }
@@ -38,11 +39,11 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("product/{productId}")]
-        [SwaggerResponse(HttpStatusCode.OK, "Details about a product", typeof(ProductContract))]
+        [SwaggerResponse(HttpStatusCode.OK, "Details about a product", typeof(ProductInformationContract))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Product not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
-        public async Task<IHttpActionResult> Get(int productId)
+        public async Task<IHttpActionResult> Get(string productId)
         {
             var storedProduct = await _productsRepository.GetAsync(productId);
             if (storedProduct == null)
@@ -50,7 +51,7 @@ namespace Sello.Api.Controllers
                 return NotFound();
             }
 
-            var product = Mapper.Map<ProductContract>(storedProduct);
+            var product = Mapper.Map<ProductInformationContract>(storedProduct);
 
             return Ok(product);
         }
@@ -60,17 +61,20 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("product")]
-        [SwaggerResponse(HttpStatusCode.Created, "A list of all products", typeof(ProductContract))]
+        [SwaggerResponse(HttpStatusCode.Created, "Information about the added product", typeof(NewProductContract))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "No valid product was specified.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
-        public async Task<IHttpActionResult> Post(ProductContract newProduct)
+        public async Task<IHttpActionResult> Post(NewProductContract newProduct)
         {
             var product = Mapper.Map<Product>(newProduct);
-            var storedProduct = await _productsRepository.AddAsync(product);
+            product.ExternalId = Guid.NewGuid().ToString();
 
-            var resourceLocation = ComposeResourceLocation(storedProduct.Id.ToString());
-            return Created(resourceLocation, newProduct);
+            var storedProduct = await _productsRepository.AddAsync(product);
+            var productInformation = Mapper.Map<ProductInformationContract>(storedProduct);
+
+            var resourceLocation = ComposeResourceLocation(productInformation.Id);
+            return Created(resourceLocation, productInformation);
         }
     }
 }

@@ -35,11 +35,11 @@ namespace Sello.Datastore.SQL.Migrations
             context.SaveChanges();
         }
 
-        private static void AddProductIfNotPresent(PlatformDatabaseContext context, Product xbox)
+        private static void AddProductIfNotPresent(PlatformDatabaseContext context, Product productToAdd)
         {
-            if (context.Products.Any(product => product.Name.ToLower() == xbox.Name.ToLower()) == false)
+            if (context.Products.Any(product => product.ExternalId.ToLower() == productToAdd.ExternalId.ToLower()) == false)
             {
-                context.Products.Add(xbox);
+                context.Products.Add(productToAdd);
             }
         }
     }

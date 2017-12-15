@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using NUnit.Framework;
 using Sello.Api.Contracts;
@@ -43,24 +41,28 @@ namespace Sello.Tests.Unit.Mappings
             const string customerFirstName = "John";
             const string customerLastName = "Doe";
             const string customerEmailAddress = "john.doe@sello.io";
-            var productId = Guid.NewGuid().ToString();
+            const string productName = "Xbox One X";
+            const string productDescription = "Microsoft's latest gaming console";
             const double productPrice = 599;
+            string productId = Guid.NewGuid().ToString();
             var customerContract = new CustomerContract
             {
                 FirstName = customerFirstName,
                 LastName = customerLastName,
                 EmailAddress = customerEmailAddress
             };
-            var orderItemContract = new OrderItemContract
+            var product = new ProductInformationContract
             {
-                Price = productPrice,
-                ProductId = productId
+                Id = productId,
+                Name = productName,
+                Description = productDescription,
+                Price = productPrice
             };
 
             var orderContract = new OrderContract
             {
                 Customer = customerContract,
-                Item = orderItemContract
+                Product = product
             };
 
             // Act
@@ -69,20 +71,51 @@ namespace Sello.Tests.Unit.Mappings
             // Assert
             Assert.NotNull(order);
             Assert.NotNull(order.Customer);
-            Assert.NotNull(order.Product);
             Assert.AreEqual(customerFirstName, order.Customer.FirstName);
             Assert.AreEqual(customerLastName, order.Customer.LastName);
             Assert.AreEqual(customerEmailAddress, order.Customer.EmailAddress);
+            Assert.NotNull(order.Product);
+            Assert.AreEqual(productId, order.Product.ExternalId);
+            Assert.AreEqual(productName, order.Product.Name);
+            Assert.AreEqual(productPrice, order.Product.Price);
+            Assert.AreEqual(productDescription, order.Product.Description);
         }
 
         [Test]
-        public void Product_MapFromContractToDbEntity_Succeeds()
+        public void Product_MapFromProductInformationContractToDbEntity_Succeeds()
         {
             // Arrange
             const string productName = "Xbox One X";
             const string productDescription = "Microsoft's latest gaming console";
             const double productPrice = 599;
-            var productContract = new ProductContract
+            string productId = Guid.NewGuid().ToString();
+            var productContract = new ProductInformationContract
+            {
+                Id= productId,
+                Name = productName,
+                Description = productDescription,
+                Price = productPrice
+            };
+
+            // Act
+            var product = Mapper.Map<Product>(productContract);
+
+            // Assert
+            Assert.NotNull(product);
+            Assert.AreEqual(productId, product.ExternalId);
+            Assert.AreEqual(productName, product.Name);
+            Assert.AreEqual(productDescription, product.Description);
+            Assert.AreEqual(productPrice, product.Price);
+        }
+
+        [Test]
+        public void Product_MapFromNewProductContractToDbEntity_Succeeds()
+        {
+            // Arrange
+            const string productName = "Xbox One X";
+            const string productDescription = "Microsoft's latest gaming console";
+            const double productPrice = 599;
+            var productContract = new NewProductContract
             {
                 Name = productName,
                 Description = productDescription,
@@ -100,7 +133,7 @@ namespace Sello.Tests.Unit.Mappings
         }
 
         [Test]
-        public void Product_MapFromDbEntityToContract_Succeeds()
+        public void Product_MapFromDbEntityToProductInformationContract_Succeeds()
         {
             // Arrange
             const string productName = "Xbox One X";
@@ -116,7 +149,7 @@ namespace Sello.Tests.Unit.Mappings
             };
 
             // Act
-            var product = Mapper.Map<ProductContract>(databaseProduct);
+            var product = Mapper.Map<ProductInformationContract>(databaseProduct);
 
             // Assert
             Assert.NotNull(product);

@@ -134,8 +134,9 @@
     <Compile Include="Contracts\OrderConfirmationContract.cs" />
     <Compile Include="Contracts\OrderContract.cs" />
     <Compile Include="Contracts\OrderItemContract.cs" />
+    <Compile Include="Contracts\NewProductContract.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Contracts\ProductContract.cs" />
+    <Compile Include="Contracts\ProductInformationContract.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RestApiController.cs" />
     <Compile Include="Owin\ExceptionHandling\OwinExceptionHandler.cs" />

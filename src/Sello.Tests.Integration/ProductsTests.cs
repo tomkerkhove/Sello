@@ -25,7 +25,7 @@ namespace Sello.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var rawContent = await response.Content.ReadAsStringAsync();
-            var products = JsonConvert.DeserializeObject<List<ProductContract>>(rawContent);
+            var products = JsonConvert.DeserializeObject<List<ProductInformationContract>>(rawContent);
             Assert.NotNull(products);
         }
     }

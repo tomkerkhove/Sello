@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -15,7 +14,6 @@ namespace Sello.Api.Controllers
     public class OrdersController : RestApiController
     {
         private readonly OrdersRepository _ordersRepository = new OrdersRepository();
-        private readonly ProductsRepository _productsRepository = new ProductsRepository();
 
         /// <summary>
         ///     Creates a new order
@@ -34,8 +32,7 @@ namespace Sello.Api.Controllers
             var orderConfirmation = new OrderConfirmationContract
             {
                 ConfirmationId = confirmationId,
-                Customer = order.Customer,
-                Item = order.Item
+                Order = order
             };
 
             var resourceUri = ComposeResourceLocation(confirmationId);
