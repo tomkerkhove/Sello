@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductsTests.cs" />
+    <Compile Include="OrderTests.cs" />
+    <Compile Include="ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelloService.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\SelloService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Flurl">
