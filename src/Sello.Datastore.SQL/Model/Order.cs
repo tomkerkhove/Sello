@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace Sello.Datastore.SQL.Model
+﻿namespace Sello.Datastore.SQL.Model
 {
     public class Order
     {
-        public int Id { get; set; }
         public string ConfirmationId { get; set; }
-        public virtual List<OrderItem> Items { get; set; }
-        public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+        public int CustomerId { get; set; }
+        public int Id { get; set; }
+        public virtual Product Product { get; set; }
+        public string ProductId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Security.Permissions;
 using System.Threading.Tasks;
 using Sello.Datastore.SQL;
 using Sello.Datastore.SQL.Model;
@@ -16,7 +17,7 @@ namespace Sello.Data.Repositories
         public async Task<Order> AddAsync(Order order)
         {
             var storedOrder = _databaseContext.Orders.Add(order);
-            _databaseContext.Customers.Attach(order.Customer);
+
             await _databaseContext.SaveChangesAsync();
 
             return storedOrder;

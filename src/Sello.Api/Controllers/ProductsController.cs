@@ -46,7 +46,9 @@ namespace Sello.Api.Controllers
         {
             var storedProduct = await _productsRepository.GetAsync(productId);
             if (storedProduct == null)
+            {
                 return NotFound();
+            }
 
             var product = Mapper.Map<ProductContract>(storedProduct);
 

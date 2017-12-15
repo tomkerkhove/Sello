@@ -21,25 +21,9 @@ namespace Sello.Api.Contracts.Mapping
                     .ForMember(order => order.Id, memberOptions => memberOptions.Ignore())
                     .ForMember(order => order.ConfirmationId, memberOptions => memberOptions.Ignore())
                     .ForMember(order => order.CustomerId, memberOptions => memberOptions.Ignore())
-                    .ForMember(order => order.Items, memberOptions => memberOptions.MapFrom(contract => contract.Items))
                     .ForMember(order => order.Customer, memberOptions => memberOptions.MapFrom(contract => contract.Customer));
                 cfg.CreateMap<CustomerContract, Customer>()
                     .ForMember(customer => customer.Id, memberOptions => memberOptions.Ignore());
-
-
-                cfg.CreateMap<OrderItemContract, OrderItem>()
-                    .ForSourceMember(orderItem => orderItem.ProductId, memberOptions => memberOptions.Ignore())
-                    .ForMember(orderItem => orderItem.OrderId, memberOptions => memberOptions.Ignore())
-                    .ForMember(orderItem => orderItem.Id, memberOptions => memberOptions.Ignore())
-                    .ForMember(orderItem => orderItem.ProductId, memberOptions => memberOptions.Ignore())
-                    .ForMember(orderItem => orderItem.Product, memberOptions => memberOptions.Ignore())
-                    .ForMember(orderItem => orderItem.Order, memberOptions => memberOptions.Ignore());
-
-                cfg.CreateMap<OrderItem, OrderItemContract>()
-                    .ForMember(contract => contract.Price, memberOptions => memberOptions.Ignore())
-                    .ForSourceMember(orderItem => orderItem.OrderId, memberOptions => memberOptions.Ignore())
-                    .ForSourceMember(orderItem => orderItem.Product, memberOptions => memberOptions.Ignore())
-                    .ForSourceMember(orderItem => orderItem.Order, memberOptions => memberOptions.Ignore());
             });
 
             Mapper.AssertConfigurationIsValid();

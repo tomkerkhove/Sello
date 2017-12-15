@@ -30,6 +30,16 @@ namespace Sello.Data.Repositories
         }
 
         /// <summary>
+        ///     Gets a specific product
+        /// </summary>
+        /// <param name="externalId">External id of the product</param>
+        public async Task<Product> GetAsync(string externalId)
+        {
+            var foundProduct = await _databaseContext.Products.SingleOrDefaultAsync(product => product.ExternalId == externalId);
+            return foundProduct;
+        }
+
+        /// <summary>
         ///     Adds a new product
         /// </summary>
         /// <param name="product">Product to add</param>

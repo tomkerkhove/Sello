@@ -44,7 +44,6 @@ namespace Sello.Tests.Unit.Mappings
             const string customerLastName = "Doe";
             const string customerEmailAddress = "john.doe@sello.io";
             var productId = Guid.NewGuid().ToString();
-            const int orderItemAmount = 2;
             const double productPrice = 599;
             var customerContract = new CustomerContract
             {
@@ -54,7 +53,6 @@ namespace Sello.Tests.Unit.Mappings
             };
             var orderItemContract = new OrderItemContract
             {
-                Amount = orderItemAmount,
                 Price = productPrice,
                 ProductId = productId
             };
@@ -62,8 +60,7 @@ namespace Sello.Tests.Unit.Mappings
             var orderContract = new OrderContract
             {
                 Customer = customerContract,
-                TotalAmount = orderItemAmount * productPrice,
-                Items = new List<OrderItemContract> { orderItemContract }
+                Item = orderItemContract
             };
 
             // Act
@@ -72,12 +69,10 @@ namespace Sello.Tests.Unit.Mappings
             // Assert
             Assert.NotNull(order);
             Assert.NotNull(order.Customer);
-            Assert.NotNull(order.Items);
+            Assert.NotNull(order.Product);
             Assert.AreEqual(customerFirstName, order.Customer.FirstName);
             Assert.AreEqual(customerLastName, order.Customer.LastName);
             Assert.AreEqual(customerEmailAddress, order.Customer.EmailAddress);
-            var orderItem = order.Items.First();
-            Assert.AreEqual(orderItemAmount, orderItem.Amount);
         }
 
         [Test]
