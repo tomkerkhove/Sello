@@ -7,13 +7,13 @@ namespace Sello.Datastore.SQL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InitialSetup : IMigrationMetadata
+    public sealed partial class AddUniqueConstraints : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialSetup));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddUniqueConstraints));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710271916092_InitialSetup"; }
+            get { return "201712151531247_AddUniqueConstraints"; }
         }
         
         string IMigrationMetadata.Source

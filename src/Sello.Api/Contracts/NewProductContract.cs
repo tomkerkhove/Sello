@@ -3,10 +3,10 @@
 namespace Sello.Api.Contracts
 {
     /// <summary>
-    ///     Information concerning a product that is being offered
+    ///     Information concerning a new product that is being added to the catalog
     /// </summary>
     [DataContract]
-    public class ProductContract
+    public class NewProductContract
     {
         /// <summary>
         ///     Name of the product

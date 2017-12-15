@@ -7,13 +7,13 @@ namespace Sello.Datastore.SQL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class EnforceMandatoryFields : IMigrationMetadata
+    public sealed partial class InitialDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EnforceMandatoryFields));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710272141358_EnforceMandatoryFields"; }
+            get { return "201712151516270_InitialDatabase"; }
         }
         
         string IMigrationMetadata.Source

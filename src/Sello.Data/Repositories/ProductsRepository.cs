@@ -22,10 +22,10 @@ namespace Sello.Data.Repositories
         /// <summary>
         ///     Gets a specific product
         /// </summary>
-        /// <param name="productId">Id of the product</param>
-        public async Task<Product> GetAsync(int productId)
+        /// <param name="externalId">External id of the product</param>
+        public async Task<Product> GetAsync(string externalId)
         {
-            var foundProduct = await _databaseContext.Products.SingleOrDefaultAsync(product => product.Id == productId);
+            var foundProduct = await _databaseContext.Products.SingleOrDefaultAsync(product => product.ExternalId == externalId);
             return foundProduct;
         }
 

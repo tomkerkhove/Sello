@@ -17,7 +17,7 @@ namespace Sello.Tests.Integration
         public async Task Products_ListAllProducts_ShouldReturnHttpOk()
         {
             // Arrange
-            const string productsUrl = "products";
+            const string productsUrl = "product";
 
             // Act
             var response = await _selloService.GetResponseAsync(productsUrl);
@@ -25,7 +25,7 @@ namespace Sello.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var rawContent = await response.Content.ReadAsStringAsync();
-            var products = JsonConvert.DeserializeObject<List<ProductContract>>(rawContent);
+            var products = JsonConvert.DeserializeObject<List<ProductInformationContract>>(rawContent);
             Assert.NotNull(products);
         }
     }
