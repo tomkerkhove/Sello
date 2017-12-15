@@ -44,6 +44,10 @@
     <Compile Include="Migrations\201712151516270_InitialDatabase.Designer.cs">
       <DependentUpon>201712151516270_InitialDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712151531247_AddUniqueConstraints.cs" />
+    <Compile Include="Migrations\201712151531247_AddUniqueConstraints.Designer.cs">
+      <DependentUpon>201712151531247_AddUniqueConstraints.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Order.cs" />
@@ -59,6 +63,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712151516270_InitialDatabase.resx">
       <DependentUpon>201712151516270_InitialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712151531247_AddUniqueConstraints.resx">
+      <DependentUpon>201712151531247_AddUniqueConstraints.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
