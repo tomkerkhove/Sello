@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductsTests.cs" />
+    <Compile Include="Tests\OrderTests.cs" />
+    <Compile Include="Tests\ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelloService.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\SelloService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Flurl">
@@ -67,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,28 +5,22 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Sello.Api.Contracts;
 
-namespace Sello.Tests.Integration
+namespace Sello.Tests.Integration.Services
 {
-    [Category("Integration")]
-    [Category("Smoke")]
-    public class ProductsTests
+    public class ProductService : SelloService
     {
+        public const string BaseUrl = "product";
         private readonly SelloService _selloService = new SelloService();
 
-        [Test]
-        public async Task Products_ListAllProducts_ShouldReturnHttpOk()
+        public async Task<List<ProductInformationContract>> GetAllAsync()
         {
-            // Arrange
-            const string productsUrl = "product";
-
-            // Act
-            var response = await _selloService.GetResponseAsync(productsUrl);
+            var response = await _selloService.GetResponseAsync(BaseUrl);
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var rawContent = await response.Content.ReadAsStringAsync();
             var products = JsonConvert.DeserializeObject<List<ProductInformationContract>>(rawContent);
-            Assert.NotNull(products);
+            return products;
         }
     }
 }

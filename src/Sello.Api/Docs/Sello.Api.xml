@@ -75,5 +75,61 @@
             </summary>
             <param name="resourceId">Identifier of a resource</param>
         </member>
+        <member name="T:Sello.Api.Resources.ValidationMessages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Customer_EmailAddressIsRequired">
+            <summary>
+              Looks up a localized string similar to Email address of the customer is not specified.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Customer_FirstNameIsRequired">
+            <summary>
+              Looks up a localized string similar to First name of the customer is not specified.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Customer_IsRequired">
+            <summary>
+              Looks up a localized string similar to No customer was specified.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Customer_LastNameIsRequired">
+            <summary>
+              Looks up a localized string similar to Last name of the customer is not specified.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Product_DescriptionIsNotCorrect">
+            <summary>
+              Looks up a localized string similar to Description of product is not correct.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Product_IsRequired">
+            <summary>
+              Looks up a localized string similar to No product was specified.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Product_NameIsNotCorrect">
+            <summary>
+              Looks up a localized string similar to Name of product is not correct.
+            </summary>
+        </member>
+        <member name="P:Sello.Api.Resources.ValidationMessages.Product_PriceIsNotCorrect">
+            <summary>
+              Looks up a localized string similar to Price of product is not correct.
+            </summary>
+        </member>
     </members>
 </doc>
