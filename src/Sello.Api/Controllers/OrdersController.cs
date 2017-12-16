@@ -7,6 +7,7 @@ using System.Web.Http;
 using AutoMapper;
 using Newtonsoft.Json;
 using Sello.Api.Contracts;
+using Sello.Api.Validators;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
 using Swashbuckle.Swagger.Annotations;
@@ -16,8 +17,10 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class OrdersController : RestApiController
     {
+        private readonly CustomerValidator _customerValidator = new CustomerValidator();
         private readonly OrdersRepository _ordersRepository = new OrdersRepository();
         private readonly ProductsRepository _productsRepository = new ProductsRepository();
+        private readonly ProductValidator _productValidator = new ProductValidator();
 
         /// <summary>
         ///     Creates a new order
@@ -25,6 +28,7 @@ namespace Sello.Api.Controllers
         [HttpPost]
         [Route("order")]
         [SwaggerResponse(HttpStatusCode.Created, "Order was created")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Order failed to validate", typeof(List<string>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Product that was mentioned in the order was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
@@ -50,7 +54,7 @@ namespace Sello.Api.Controllers
                 return BadRequest("No order was specified");
             }
 
-            var persistedProduct = await _productsRepository.GetAsync(order.Product.Id);
+            var persistedProduct = await _productsRepository.GetAsync(order.Product?.Id);
             if (persistedProduct == null)
             {
                 return NotFound();
@@ -58,73 +62,18 @@ namespace Sello.Api.Controllers
 
             var validationMessages = new List<string>();
 
-            var productValidationMessages = ValidateProduct(order.Product, persistedProduct);
+            var productValidationMessages = _productValidator.Run(order.Product, persistedProduct);
             validationMessages.AddRange(productValidationMessages);
 
-            var customerValidationMessages = ValidateCustomer(order.Customer);
+            var customerValidationMessages = _customerValidator.Run(order.Customer);
             validationMessages.AddRange(customerValidationMessages);
 
             if (validationMessages.Any())
             {
-                var rawResponse = JsonConvert.SerializeObject(validationMessages);
-                return BadRequest(rawResponse);
+                return Content(HttpStatusCode.BadRequest, validationMessages);
             }
 
             return null;
-        }
-
-        private List<string> ValidateProduct(ProductInformationContract product, Product persistedProduct)
-        {
-            var validationMessages = new List<string>();
-
-            if (product == null)
-            {
-                validationMessages.Add("No product was specified");
-            }
-            else
-            {
-                if (product.Name != persistedProduct.Name)
-                {
-                    validationMessages.Add("Name of product is not correct");
-                }
-                if (product.Description != persistedProduct.Description)
-                {
-                    validationMessages.Add("Description of product is not correct");
-                }
-                if (product.Price != persistedProduct.Price)
-                {
-                    validationMessages.Add("Price of product is not correct");
-                }
-            }
-
-            return validationMessages;
-        }
-
-        private List<string> ValidateCustomer(CustomerContract customer)
-        {
-            var validationMessages = new List<string>();
-
-            if (customer == null)
-            {
-                validationMessages.Add("No customer was specified");
-            }
-            else
-            {
-                if (string.IsNullOrWhiteSpace(customer.EmailAddress))
-                {
-                    validationMessages.Add("Email address of the customer is not specified");
-                }
-                if (string.IsNullOrWhiteSpace(customer.FirstName))
-                {
-                    validationMessages.Add("First name of the customer is not specified");
-                }
-                if (string.IsNullOrWhiteSpace(customer.LastName))
-                {
-                    validationMessages.Add("Last name of the customer is not specified");
-                }
-            }
-
-            return validationMessages;
         }
 
         private async Task<OrderConfirmationContract> StoreOrderAsync(OrderContract order)

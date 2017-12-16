@@ -1,12 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Sello.Api.Contracts;
+using Sello.Api.Resources;
 using Sello.Tests.Integration.Services;
 
-namespace Sello.Tests.Integration
+namespace Sello.Tests.Integration.Tests
 {
     [Category("Integration")]
     public class OrderTests
@@ -84,7 +86,13 @@ namespace Sello.Tests.Integration
             var response = await _selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Product_PriceIsNotCorrect));
         }
 
         [Test]
@@ -114,7 +122,42 @@ namespace Sello.Tests.Integration
             var response = await _selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Product_DescriptionIsNotCorrect));
+        }
+
+        [Test]
+        public async Task Orders_CreateWithoutProduct_ShouldReturnHttpBadRequest()
+        {
+            // Arrange
+            const string ordersUrl = "order";
+            const string customerFirstName = "Tom";
+            const string customerLastName = "Kerkhove";
+            const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+
+            var customer = new CustomerContract
+            {
+                FirstName = customerFirstName,
+                LastName = customerLastName,
+                EmailAddress = customerEmailAddress
+            };
+            var order = new OrderContract
+            {
+                Customer = customer,
+                Product = null
+            };
+
+            // Act
+            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.NotNull(response);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Test]
@@ -144,7 +187,13 @@ namespace Sello.Tests.Integration
             var response = await _selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Product_NameIsNotCorrect));
         }
 
         [Test]
@@ -173,7 +222,13 @@ namespace Sello.Tests.Integration
             var response = await _selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Customer_FirstNameIsRequired));
         }
 
         [Test]
@@ -202,7 +257,13 @@ namespace Sello.Tests.Integration
             var response = await _selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Customer_LastNameIsRequired));
         }
 
         [Test]
@@ -231,7 +292,39 @@ namespace Sello.Tests.Integration
             var response = await _selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Customer_EmailAddressIsRequired));
+        }
+
+        [Test]
+        public async Task Orders_CreateForExistingProductWithoutCustomer_ShouldReturnHttpBadRequest()
+        {
+            // Arrange
+            const string ordersUrl = "order";
+            var productToBuy = await GetProductFromCatalogAsync();
+
+            var order = new OrderContract
+            {
+                Customer = null,
+                Product = productToBuy
+            };
+
+            // Act
+            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.NotNull(response);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Customer_IsRequired));
         }
 
         [Test]

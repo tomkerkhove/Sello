@@ -142,6 +142,13 @@
     <Compile Include="Owin\ExceptionHandling\OwinExceptionHandler.cs" />
     <Compile Include="Owin\OwinStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ValidationMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidationMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Validators\CustomerValidator.cs" />
+    <Compile Include="Validators\ProductValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -166,6 +173,13 @@
       <Project>{79ba7f3d-8067-44cc-b335-232dda941eab}</Project>
       <Name>Sello.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ValidationMessages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

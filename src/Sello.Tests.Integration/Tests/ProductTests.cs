@@ -8,7 +8,7 @@ using NUnit.Framework;
 using Sello.Api.Contracts;
 using Sello.Tests.Integration.Services;
 
-namespace Sello.Tests.Integration
+namespace Sello.Tests.Integration.Tests
 {
     [Category("Integration")]
     public class ProductTests
