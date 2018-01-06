@@ -8,7 +8,19 @@ namespace Sello.Data.Repositories
 {
     public class ProductsRepository
     {
-        private readonly PlatformDatabaseContext _databaseContext = new PlatformDatabaseContext();
+        private readonly PlatformDatabaseContext _databaseContext;
+
+        public ProductsRepository(PlatformDatabaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
+
+        public static async Task<ProductsRepository> CreateAsync()
+        {
+            var databaseContext = await PlatformDatabaseContext.CreateAsync();
+
+            return new ProductsRepository(databaseContext);
+        }
 
         /// <summary>
         ///     Gets all products

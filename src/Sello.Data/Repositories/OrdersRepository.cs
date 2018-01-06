@@ -6,9 +6,26 @@ namespace Sello.Data.Repositories
 {
     public class OrdersRepository
     {
-        private readonly CustomersRepository _customersRepository = new CustomersRepository();
-        private readonly PlatformDatabaseContext _databaseContext = new PlatformDatabaseContext();
-        private readonly ProductsRepository _productsRepository = new ProductsRepository();
+        private readonly CustomersRepository _customersRepository;
+        private readonly PlatformDatabaseContext _databaseContext;
+        private readonly ProductsRepository _productsRepository;
+
+        public OrdersRepository(ProductsRepository productsRepository, CustomersRepository customersRepository,
+            PlatformDatabaseContext databaseContext)
+        {
+            _productsRepository = productsRepository;
+            _customersRepository = customersRepository;
+            _databaseContext = databaseContext;
+        }
+
+        public static async Task<OrdersRepository> CreateAsync()
+        {
+            var databaseContext = await PlatformDatabaseContext.CreateAsync();
+            var productsRepository = new ProductsRepository(databaseContext);
+            var customersRepository = new CustomersRepository(databaseContext);
+
+            return new OrdersRepository(productsRepository, customersRepository, databaseContext);
+        }
 
         /// <summary>
         ///     Adds a new order
