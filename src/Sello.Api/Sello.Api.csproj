@@ -125,6 +125,11 @@
     <Content Include="Docs\Sello.Api.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Parameters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties\PROD.SetParameters.xml" />
+    <Content Include="Properties\DEV.SetParameters.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
