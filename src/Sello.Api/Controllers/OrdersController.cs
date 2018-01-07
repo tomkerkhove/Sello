@@ -17,9 +17,9 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class OrdersController : RestApiController
     {
+        private OrdersRepository _ordersRepository;
+        private ProductsRepository _productsRepository;
         private readonly CustomerValidator _customerValidator = new CustomerValidator();
-        private readonly OrdersRepository _ordersRepository = new OrdersRepository();
-        private readonly ProductsRepository _productsRepository = new ProductsRepository();
         private readonly ProductValidator _productValidator = new ProductValidator();
 
         /// <summary>
@@ -54,7 +54,8 @@ namespace Sello.Api.Controllers
                 return BadRequest("No order was specified");
             }
 
-            var persistedProduct = await _productsRepository.GetAsync(order.Product?.Id);
+            var productsRepository = await GetOrCreateProductsRepositoryAsync();
+            var persistedProduct = await productsRepository.GetAsync(order.Product?.Id);
             if (persistedProduct == null)
             {
                 return NotFound();
@@ -83,7 +84,8 @@ namespace Sello.Api.Controllers
             var dbOrder = Mapper.Map<Order>(order);
             dbOrder.ConfirmationId = confirmationId;
 
-            await _ordersRepository.AddAsync(dbOrder);
+            var ordersRepository = await GetOrCreateOrdersRepositoryAsync();
+            await ordersRepository.AddAsync(dbOrder);
 
             var orderConfirmation = new OrderConfirmationContract
             {
@@ -92,6 +94,26 @@ namespace Sello.Api.Controllers
             };
 
             return orderConfirmation;
+        }
+
+        private async Task<ProductsRepository> GetOrCreateProductsRepositoryAsync()
+        {
+            if (_productsRepository == null)
+            {
+                _productsRepository = await ProductsRepository.CreateAsync();
+            }
+
+            return _productsRepository;
+        }
+
+        private async Task<OrdersRepository> GetOrCreateOrdersRepositoryAsync()
+        {
+            if (_ordersRepository == null)
+            {
+                _ordersRepository = await OrdersRepository.CreateAsync();
+            }
+
+            return _ordersRepository;
         }
     }
 }

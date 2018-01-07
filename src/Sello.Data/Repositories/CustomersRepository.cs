@@ -7,8 +7,19 @@ namespace Sello.Data.Repositories
 {
     public class CustomersRepository
     {
-        private readonly PlatformDatabaseContext _databaseContext = new PlatformDatabaseContext();
+        private readonly PlatformDatabaseContext _databaseContext;
 
+        public CustomersRepository(PlatformDatabaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
+
+        public static async Task<CustomersRepository> CreateAsync()
+        {
+            var databaseContext = await PlatformDatabaseContext.CreateAsync();
+
+            return new CustomersRepository(databaseContext);
+        }
 
         /// <summary>
         ///     Gets a specific customer
@@ -17,7 +28,7 @@ namespace Sello.Data.Repositories
         public async Task<Customer> GetAsync(string emailAddress)
         {
             var foundCustomer = await _databaseContext.Customers
-                                            .SingleOrDefaultAsync(customer => customer.EmailAddress.ToLower() == emailAddress.ToLower());
+                .SingleOrDefaultAsync(customer => customer.EmailAddress.ToLower() == emailAddress.ToLower());
             return foundCustomer;
         }
     }

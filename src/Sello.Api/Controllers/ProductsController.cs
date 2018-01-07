@@ -15,7 +15,7 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class ProductsController : RestApiController
     {
-        private readonly ProductsRepository _productsRepository = new ProductsRepository();
+        private ProductsRepository _productsRepository;
 
         /// <summary>
         ///     Gets a list of all products
@@ -27,7 +27,8 @@ namespace Sello.Api.Controllers
             "The request could not be completed successfully, please try again.")]
         public async Task<IHttpActionResult> Get()
         {
-            var storedProducts = await _productsRepository.GetAsync();
+            var productsRepository = await GetOrCreateProductsRepositoryAsync();
+            var storedProducts = await productsRepository.GetAsync();
 
             var products = storedProducts.Select(Mapper.Map<ProductInformationContract>);
 
@@ -45,7 +46,8 @@ namespace Sello.Api.Controllers
             "The request could not be completed successfully, please try again.")]
         public async Task<IHttpActionResult> Get(string productId)
         {
-            var storedProduct = await _productsRepository.GetAsync(productId);
+            var productsRepository = await GetOrCreateProductsRepositoryAsync();
+            var storedProduct = await productsRepository.GetAsync(productId);
             if (storedProduct == null)
             {
                 return NotFound();
@@ -70,11 +72,22 @@ namespace Sello.Api.Controllers
             var product = Mapper.Map<Product>(newProduct);
             product.ExternalId = Guid.NewGuid().ToString();
 
-            var storedProduct = await _productsRepository.AddAsync(product);
+            var productsRepository = await GetOrCreateProductsRepositoryAsync();
+            var storedProduct = await productsRepository.AddAsync(product);
             var productInformation = Mapper.Map<ProductInformationContract>(storedProduct);
 
             var resourceLocation = ComposeResourceLocation(productInformation.Id);
             return Created(resourceLocation, productInformation);
+        }
+
+        private async Task<ProductsRepository> GetOrCreateProductsRepositoryAsync()
+        {
+            if (_productsRepository == null)
+            {
+                _productsRepository = await ProductsRepository.CreateAsync();
+            }
+
+            return _productsRepository;
         }
     }
 }

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+  <setParameter name="Common.Environment" value="Dev"/>
+  <setParameter name="Security.KeyVault.Uri" value="#{Security.KeyVault.Uri}#"/>
+  <setParameter name="Sql.Codito.ConnectionString" value="N/A"/>
+</parameters>

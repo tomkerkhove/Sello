@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Sello.Tests.Integration.Tests
     [Category("Integration")]
     public class OrderTests
     {
-        private readonly SelloService _selloService = new SelloService();
+        private readonly SelloService selloService = new SelloService();
 
         [Test]
         public async Task Orders_CreateForExistingProduct_ShouldReturnHttpOk()
@@ -22,7 +23,7 @@ namespace Sello.Tests.Integration.Tests
             const string ordersUrl = "order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
-            const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var customerEmailAddress = $"{Guid.NewGuid().ToString()}@codit.eu";
             var productToBuy = await GetProductFromCatalogAsync();
 
             var customer = new CustomerContract
@@ -38,7 +39,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
@@ -83,7 +84,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -119,7 +120,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -153,7 +154,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -184,7 +185,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -219,7 +220,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -254,7 +255,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -289,7 +290,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -315,7 +316,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.NotNull(response);
@@ -360,7 +361,7 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(ordersUrl, order);
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);

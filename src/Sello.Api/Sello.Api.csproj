@@ -76,6 +76,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -122,6 +125,11 @@
     <Content Include="Docs\Sello.Api.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Parameters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties\PROD.SetParameters.xml" />
+    <Content Include="Properties\DEV.SetParameters.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -165,6 +173,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sello.Common\Sello.Common.csproj">
+      <Project>{C0CB3F8E-1A6F-46F0-8F81-EC87161FB4A1}</Project>
+      <Name>Sello.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sello.Datastore.SQL\Sello.Datastore.SQL.csproj">
       <Project>{f90792e1-e9d3-4248-8a8a-4e2f91d325f8}</Project>
       <Name>Sello.Datastore.SQL</Name>

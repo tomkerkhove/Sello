@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+  <parameter name="Common.Environment" description="Current environment in which its running" defaultvalue="__Common.Environment__">
+    <parameterentry kind="XmlFile" scope="\\Web.config" match="/configuration/appSettings/add[@key='Common.Environment']/@value"/>
+  </parameter>
+  <parameter name="Security.KeyVault.Uri" description="Uri of the Azure Key Vault to use" defaultvalue="__Security.KeyVault.Uri__">
+    <parameterentry kind="XmlFile" scope="\\Web.config" match="/configuration/appSettings/add[@key='Security.KeyVault.Uri']/@value"/>
+  </parameter>
+  <parameter name="Sql.Codito.ConnectionString" description="Local connection string for Codito" defaultvalue="N/A">
+    <parameterentry kind="XmlFile" scope="\\Web.config" match="/configuration/appSettings/add[@key='Sql.Codito.ConnectionString']/@value"/>
+  </parameter>
+</parameters>

@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F90792E1-E9D3-4248-8A8A-4E2F91D325F8}</ProjectGuid>
+    <ProjectGuid>{C0CB3F8E-1A6F-46F0-8F81-EC87161FB4A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sello.Datastore.SQL</RootNamespace>
-    <AssemblyName>Sello.Datastore.SQL</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <RootNamespace>Sello.Common</RootNamespace>
+    <AssemblyName>Sello.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,39 +41,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201712151516270_InitialDatabase.cs" />
-    <Compile Include="Migrations\201712151516270_InitialDatabase.Designer.cs">
-      <DependentUpon>201712151516270_InitialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712151531247_AddUniqueConstraints.cs" />
-    <Compile Include="Migrations\201712151531247_AddUniqueConstraints.Designer.cs">
-      <DependentUpon>201712151531247_AddUniqueConstraints.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\Customer.cs" />
-    <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\Product.cs" />
-    <Compile Include="PlatformDatabaseContext.cs" />
+    <Compile Include="Configuration\Environment.cs" />
+    <Compile Include="Configuration\Interfaces\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\LocalConfigurationProvider.cs" />
+    <Compile Include="DependencyInjection\PlatformKernel.cs" />
+    <Compile Include="Exceptions\SecretNotFoundException.cs" />
+    <Compile Include="Exceptions\SettingNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Interfaces\ISecretProvider.cs" />
+    <Compile Include="Security\KeyVaultSecretProvider.cs" />
+    <Compile Include="Security\LocalSecretProvider.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <PackageReference Include="EntityFramework">
-      <Version>6.2.0</Version>
+    <PackageReference Include="Microsoft.Azure.KeyVault">
+      <Version>2.3.2</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712151516270_InitialDatabase.resx">
-      <DependentUpon>201712151516270_InitialDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712151531247_AddUniqueConstraints.resx">
-      <DependentUpon>201712151531247_AddUniqueConstraints.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sello.Common\Sello.Common.csproj">
-      <Project>{c0cb3f8e-1a6f-46f0-8f81-ec87161fb4a1}</Project>
-      <Name>Sello.Common</Name>
-    </ProjectReference>
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication">
+      <Version>1.1.0-preview</Version>
+    </PackageReference>
+    <PackageReference Include="Ninject">
+      <Version>3.3.4</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
