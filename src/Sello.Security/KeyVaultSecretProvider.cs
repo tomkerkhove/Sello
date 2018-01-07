@@ -24,9 +24,4 @@ namespace Sello.Security
             return secret.Value;
         }
     }
-
-    public interface ISecretProvider
-    {
-        Task<string> GetSecretAsync(string secretName);
-    }
 }

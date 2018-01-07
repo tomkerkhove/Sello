@@ -34,8 +34,11 @@ namespace Sello.Data.Repositories
         public async Task<Order> AddAsync(Order order)
         {
             var foundCustomer = await _customersRepository.GetAsync(order.Customer.EmailAddress);
-            order.Customer = null;
-            order.CustomerId = foundCustomer.Id;
+            if (foundCustomer != null)
+            {
+                order.Customer = null;
+                order.CustomerId = foundCustomer.Id;
+            }
 
             var foundProduct = await _productsRepository.GetAsync(order.Product.ExternalId);
             order.Product = null;
