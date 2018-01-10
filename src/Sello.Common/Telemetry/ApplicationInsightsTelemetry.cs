@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Sello.Common.Configuration.Interfaces;
@@ -25,6 +26,11 @@ namespace Sello.Common.Telemetry
         public void TrackEvent(string eventName, Dictionary<string, string> eventContext)
         {
             applicationInsightsTelemetryClient.TrackEvent(eventName, eventContext);
+        }
+
+        public void TrackException(Exception exception)
+        {
+            applicationInsightsTelemetryClient.TrackException(exception);
         }
     }
 }
