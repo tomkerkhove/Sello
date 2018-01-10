@@ -5,9 +5,11 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Newtonsoft.Json;
+using Ninject;
 using Sello.Api.Contracts;
 using Sello.Api.Validators;
+using Sello.Common.DependencyInjection;
+using Sello.Common.Telemetry.Interfaces;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
 using Swashbuckle.Swagger.Annotations;
@@ -17,10 +19,11 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class OrdersController : RestApiController
     {
-        private OrdersRepository _ordersRepository;
-        private ProductsRepository _productsRepository;
+        private const string OrderCreatedEvent = "Order Created";
         private readonly CustomerValidator _customerValidator = new CustomerValidator();
         private readonly ProductValidator _productValidator = new ProductValidator();
+        private OrdersRepository _ordersRepository;
+        private ProductsRepository _productsRepository;
 
         /// <summary>
         ///     Creates a new order
@@ -44,7 +47,61 @@ namespace Sello.Api.Controllers
 
             var resourceUri = ComposeResourceLocation(orderConfirmation.ConfirmationId);
 
+            TrackNewOrderCreatedEvent(orderConfirmation);
+
             return Created(resourceUri, orderConfirmation);
+        }
+
+        private async Task<OrdersRepository> GetOrCreateOrdersRepositoryAsync()
+        {
+            if (_ordersRepository == null)
+            {
+                _ordersRepository = await OrdersRepository.CreateAsync();
+            }
+
+            return _ordersRepository;
+        }
+
+        private async Task<ProductsRepository> GetOrCreateProductsRepositoryAsync()
+        {
+            if (_productsRepository == null)
+            {
+                _productsRepository = await ProductsRepository.CreateAsync();
+            }
+
+            return _productsRepository;
+        }
+
+        private async Task<OrderConfirmationContract> StoreOrderAsync(OrderContract order)
+        {
+            var confirmationId = Guid.NewGuid().ToString();
+
+            var dbOrder = Mapper.Map<Order>(order);
+            dbOrder.ConfirmationId = confirmationId;
+
+            var ordersRepository = await GetOrCreateOrdersRepositoryAsync();
+            await ordersRepository.AddAsync(dbOrder);
+
+            var orderConfirmation = new OrderConfirmationContract
+            {
+                ConfirmationId = confirmationId,
+                Order = order
+            };
+
+            return orderConfirmation;
+        }
+
+        private void TrackNewOrderCreatedEvent(OrderConfirmationContract orderConfirmation)
+        {
+            var eventContext = new Dictionary<string, string>
+            {
+                {"ConfirmationId", orderConfirmation.ConfirmationId},
+                {"EmailAddress", orderConfirmation.Order.Customer.EmailAddress},
+                {"Product", orderConfirmation.Order.Product.Name},
+                {"ProductId", orderConfirmation.Order.Product.Id}
+            };
+
+             PlatformKernel.Instance.Get<ITelemetry>().TrackEvent(OrderCreatedEvent, eventContext);
         }
 
         private async Task<IHttpActionResult> ValidateOrderAsync(OrderContract order)
@@ -75,45 +132,6 @@ namespace Sello.Api.Controllers
             }
 
             return null;
-        }
-
-        private async Task<OrderConfirmationContract> StoreOrderAsync(OrderContract order)
-        {
-            var confirmationId = Guid.NewGuid().ToString();
-
-            var dbOrder = Mapper.Map<Order>(order);
-            dbOrder.ConfirmationId = confirmationId;
-
-            var ordersRepository = await GetOrCreateOrdersRepositoryAsync();
-            await ordersRepository.AddAsync(dbOrder);
-
-            var orderConfirmation = new OrderConfirmationContract
-            {
-                ConfirmationId = confirmationId,
-                Order = order
-            };
-
-            return orderConfirmation;
-        }
-
-        private async Task<ProductsRepository> GetOrCreateProductsRepositoryAsync()
-        {
-            if (_productsRepository == null)
-            {
-                _productsRepository = await ProductsRepository.CreateAsync();
-            }
-
-            return _productsRepository;
-        }
-
-        private async Task<OrdersRepository> GetOrCreateOrdersRepositoryAsync()
-        {
-            if (_ordersRepository == null)
-            {
-                _ordersRepository = await OrdersRepository.CreateAsync();
-            }
-
-            return _ordersRepository;
         }
     }
 }

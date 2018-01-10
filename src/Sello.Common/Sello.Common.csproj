@@ -51,9 +51,14 @@
     <Compile Include="Security\Interfaces\ISecretProvider.cs" />
     <Compile Include="Security\KeyVaultSecretProvider.cs" />
     <Compile Include="Security\LocalSecretProvider.cs" />
+    <Compile Include="Telemetry\ApplicationInsightsTelemetry.cs" />
+    <Compile Include="Telemetry\Interfaces\ITelemetry.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights">
+      <Version>2.4.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Azure.KeyVault">
       <Version>2.3.2</Version>
     </PackageReference>

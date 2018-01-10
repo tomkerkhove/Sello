@@ -11,6 +11,8 @@ using Sello.Common.Configuration.Interfaces;
 using Sello.Common.DependencyInjection;
 using Sello.Common.Security;
 using Sello.Common.Security.Interfaces;
+using Sello.Common.Telemetry;
+using Sello.Common.Telemetry.Interfaces;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
 
@@ -35,7 +37,7 @@ namespace Sello.Api.Owin
         {
             PlatformKernel.Instance.Bind<IConfigurationProvider>().To<LocalConfigurationProvider>();
 
-            var configurationProvider=PlatformKernel.Instance.Get<IConfigurationProvider>();
+            var configurationProvider = PlatformKernel.Instance.Get<IConfigurationProvider>();
             if (configurationProvider.IsCurrentEnvironment(Environment.Local))
             {
                 PlatformKernel.Instance.Bind<ISecretProvider>().To<LocalSecretProvider>();
@@ -44,6 +46,13 @@ namespace Sello.Api.Owin
             {
                 PlatformKernel.Instance.Bind<ISecretProvider>().To<KeyVaultSecretProvider>();
             }
+
+            PlatformKernel.Instance.Bind<ITelemetry>().To<ApplicationInsightsTelemetry>();
+        }
+
+        private void ConfigureExceptionHandling(HttpConfiguration httpConfiguration)
+        {
+            httpConfiguration.Services.Replace(typeof(IExceptionHandler), new OwinExceptionHandler());
         }
 
         private void ConfigureMapping()
@@ -54,11 +63,6 @@ namespace Sello.Api.Owin
         private void ConfigureRoutes(HttpConfiguration httpConfiguration)
         {
             WebApiConfig.Register(httpConfiguration);
-        }
-
-        private void ConfigureExceptionHandling(HttpConfiguration httpConfiguration)
-        {
-            httpConfiguration.Services.Replace(typeof(IExceptionHandler), new OwinExceptionHandler());
         }
 
         private void ConfigureSwagger()
