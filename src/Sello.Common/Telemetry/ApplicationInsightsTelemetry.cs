@@ -14,12 +14,12 @@ namespace Sello.Common.Telemetry
         {
             var instrumentationKey = configurationProvider.GetSetting("Telemetry.Key");
 
-            TelemetryConfiguration.Active.DisableTelemetry = false;
-
             applicationInsightsTelemetryClient = new TelemetryClient
             {
                 InstrumentationKey = instrumentationKey
             };
+
+            TelemetryConfiguration.Active.DisableTelemetry = false;
         }
 
         public void TrackEvent(string eventName, Dictionary<string, string> eventContext)
