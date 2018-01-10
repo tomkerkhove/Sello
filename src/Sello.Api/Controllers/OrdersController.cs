@@ -5,10 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Ninject;
 using Sello.Api.Contracts;
 using Sello.Api.Validators;
-using Sello.Common.DependencyInjection;
 using Sello.Common.Telemetry.Interfaces;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
@@ -22,8 +20,14 @@ namespace Sello.Api.Controllers
         private const string OrderCreatedEvent = "Order Created";
         private readonly CustomerValidator _customerValidator = new CustomerValidator();
         private readonly ProductValidator _productValidator = new ProductValidator();
+        private readonly ITelemetry telemetry;
         private OrdersRepository _ordersRepository;
         private ProductsRepository _productsRepository;
+
+        public OrdersController(ITelemetry telemetry)
+        {
+            this.telemetry = telemetry;
+        }
 
         /// <summary>
         ///     Creates a new order
@@ -101,7 +105,7 @@ namespace Sello.Api.Controllers
                 {"ProductId", orderConfirmation.Order.Product.Id}
             };
 
-             PlatformKernel.Instance.Get<ITelemetry>().TrackEvent(OrderCreatedEvent, eventContext);
+            telemetry.TrackEvent(OrderCreatedEvent, eventContext);
         }
 
         private async Task<IHttpActionResult> ValidateOrderAsync(OrderContract order)

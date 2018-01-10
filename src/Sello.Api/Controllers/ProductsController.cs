@@ -5,9 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Ninject;
 using Sello.Api.Contracts;
-using Sello.Common.DependencyInjection;
 using Sello.Common.Telemetry.Interfaces;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
@@ -19,7 +17,13 @@ namespace Sello.Api.Controllers
     public class ProductsController : RestApiController
     {
         private const string ProductAddedEvent = "Product Added";
+        private readonly ITelemetry telemetry;
         private ProductsRepository _productsRepository;
+
+        public ProductsController(ITelemetry telemetry)
+        {
+            this.telemetry = telemetry;
+        }
 
         /// <summary>
         ///     Gets a list of all products
@@ -106,7 +110,7 @@ namespace Sello.Api.Controllers
                 {"Price", productInformation.Price.ToString("C")}
             };
 
-            PlatformKernel.Instance.Get<ITelemetry>().TrackEvent(ProductAddedEvent, eventContext);
+            telemetry.TrackEvent(ProductAddedEvent, eventContext);
         }
     }
 }
