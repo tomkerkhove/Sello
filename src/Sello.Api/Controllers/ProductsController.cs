@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Sello.Api.Contracts;
+using Sello.Common.Telemetry.Interfaces;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
 using Swashbuckle.Swagger.Annotations;
@@ -15,7 +16,14 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class ProductsController : RestApiController
     {
+        private const string ProductAddedEvent = "Product Added";
+        private readonly ITelemetry telemetry;
         private ProductsRepository _productsRepository;
+
+        public ProductsController(ITelemetry telemetry)
+        {
+            this.telemetry = telemetry;
+        }
 
         /// <summary>
         ///     Gets a list of all products
@@ -76,6 +84,8 @@ namespace Sello.Api.Controllers
             var storedProduct = await productsRepository.AddAsync(product);
             var productInformation = Mapper.Map<ProductInformationContract>(storedProduct);
 
+            TrackNewProductAddedEvent(productInformation);
+
             var resourceLocation = ComposeResourceLocation(productInformation.Id);
             return Created(resourceLocation, productInformation);
         }
@@ -88,6 +98,19 @@ namespace Sello.Api.Controllers
             }
 
             return _productsRepository;
+        }
+
+        private void TrackNewProductAddedEvent(ProductInformationContract productInformation)
+        {
+            var eventContext = new Dictionary<string, string>
+            {
+                {"Name", productInformation.Name},
+                {"Id", productInformation.Id},
+                {"Description", productInformation.Description},
+                {"Price", productInformation.Price.ToString("C")}
+            };
+
+            telemetry.TrackEvent(ProductAddedEvent, eventContext);
         }
     }
 }

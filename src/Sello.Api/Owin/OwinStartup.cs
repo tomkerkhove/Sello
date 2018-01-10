@@ -1,7 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Reflection;
+using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Microsoft.Owin;
 using Ninject;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using Sello.Api.Contracts.Mapping;
 using Sello.Api.Owin;
@@ -11,6 +14,8 @@ using Sello.Common.Configuration.Interfaces;
 using Sello.Common.DependencyInjection;
 using Sello.Common.Security;
 using Sello.Common.Security.Interfaces;
+using Sello.Common.Telemetry;
+using Sello.Common.Telemetry.Interfaces;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
 
@@ -26,24 +31,46 @@ namespace Sello.Api.Owin
             ConfigureExceptionHandling(httpConfiguration);
             ConfigureSwagger();
             ConfigureMapping();
-            ConfigureDependencyContainer();
+            ConfigureDependencyContainer(app, httpConfiguration);
 
             httpConfiguration.EnsureInitialized();
         }
 
-        private void ConfigureDependencyContainer()
+        private static StandardKernel CreateKernel()
         {
-            PlatformKernel.Instance.Bind<IConfigurationProvider>().To<LocalConfigurationProvider>();
+            var kernel = new StandardKernel();
+            InitializeKernel(kernel);
 
-            var configurationProvider=PlatformKernel.Instance.Get<IConfigurationProvider>();
+            return kernel;
+        }
+
+        private static void InitializeKernel(StandardKernel kernel)
+        {
+            kernel.Load(Assembly.GetExecutingAssembly());
+            kernel.Bind<IConfigurationProvider>().To<LocalConfigurationProvider>();
+
+            var configurationProvider = kernel.Get<IConfigurationProvider>();
             if (configurationProvider.IsCurrentEnvironment(Environment.Local))
             {
-                PlatformKernel.Instance.Bind<ISecretProvider>().To<LocalSecretProvider>();
+                kernel.Bind<ISecretProvider>().To<LocalSecretProvider>();
             }
             else
             {
-                PlatformKernel.Instance.Bind<ISecretProvider>().To<KeyVaultSecretProvider>();
+                kernel.Bind<ISecretProvider>().To<KeyVaultSecretProvider>();
             }
+
+            kernel.Bind<ITelemetry>().To<ApplicationInsightsTelemetry>();
+        }
+
+        private void ConfigureDependencyContainer(IAppBuilder app, HttpConfiguration httpConfiguration)
+        {
+            InitializeKernel(PlatformKernel.Instance);
+            app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(httpConfiguration);
+        }
+
+        private void ConfigureExceptionHandling(HttpConfiguration httpConfiguration)
+        {
+            httpConfiguration.Services.Replace(typeof(IExceptionHandler), new OwinExceptionHandler());
         }
 
         private void ConfigureMapping()
@@ -54,11 +81,6 @@ namespace Sello.Api.Owin
         private void ConfigureRoutes(HttpConfiguration httpConfiguration)
         {
             WebApiConfig.Register(httpConfiguration);
-        }
-
-        private void ConfigureExceptionHandling(HttpConfiguration httpConfiguration)
-        {
-            httpConfiguration.Services.Replace(typeof(IExceptionHandler), new OwinExceptionHandler());
         }
 
         private void ConfigureSwagger()
