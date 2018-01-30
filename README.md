@@ -21,11 +21,9 @@ In Azure API Management we have the following setup:
 
 These will communicate with the physical API that is hosted in an Azure Web App.
 
------------------------------------------------------------------
-
-**Warning** - *For the sake of the demo, the physical API is not secured which you should do in real-world scenarios.*
-
------------------------------------------------------------------
+|:rotating_light: Security                                                                            |
+|-----------------------------------------------------------------------------------------------------|
+| **Warning** - *For the sake of the demo, the physical API is not secured which is not recommended.* |
 
 ## License Information
 This is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the web application. But you always need to state that Codit is the original author of this web application.
