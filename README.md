@@ -15,7 +15,6 @@ This also enables them to only expose the APIs that 3rd parties need and keep th
 
 In Azure API Management we have the following setup:
 
-|                             |Party                                                                               |
 |                             |**3rd Party**              |**Management**                                          |
 |:----------------------------|:-------------------------:|:------------------------------------------------------:|
 |Product Name                 |Sello                      |Sello Management                                        |
