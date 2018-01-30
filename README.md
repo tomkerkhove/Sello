@@ -14,6 +14,7 @@ Sello exposes all their APIs via API Management in order to decouple the physica
 This also enables them to only expose the APIs that 3rd parties need and keep the management APIs internally.
 
 In Azure API Management we have the following setup:
+
 ||**3rd Party**|**Management**|
 |Product|Sello|Sello Management|
 |Published in Developer Portal|:white_check_mark:|:x:|
