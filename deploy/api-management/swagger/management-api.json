@@ -15,7 +15,7 @@
   },
   "host": "localhost:1337",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/api/v1/product": {
