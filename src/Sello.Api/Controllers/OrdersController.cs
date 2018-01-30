@@ -20,13 +20,13 @@ namespace Sello.Api.Controllers
         private const string OrderCreatedEvent = "Order Created";
         private readonly CustomerValidator _customerValidator = new CustomerValidator();
         private readonly ProductValidator _productValidator = new ProductValidator();
-        private readonly ITelemetry telemetry;
+        private readonly ITelemetry _telemetry;
         private OrdersRepository _ordersRepository;
         private ProductsRepository _productsRepository;
 
         public OrdersController(ITelemetry telemetry)
         {
-            this.telemetry = telemetry;
+            this._telemetry = telemetry;
         }
 
         /// <summary>
@@ -39,6 +39,9 @@ namespace Sello.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Product that was mentioned in the order was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
+#if MANAGEMENT_API
+        [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
+#endif
         public async Task<IHttpActionResult> Post([FromBody] OrderContract order)
         {
             var validationResult = await ValidateOrderAsync(order);
@@ -105,7 +108,7 @@ namespace Sello.Api.Controllers
                 {"ProductId", orderConfirmation.Order.Product.Id}
             };
 
-            telemetry.TrackEvent(OrderCreatedEvent, eventContext);
+            _telemetry.TrackEvent(OrderCreatedEvent, eventContext);
         }
 
         private async Task<IHttpActionResult> ValidateOrderAsync(OrderContract order)
