@@ -17,12 +17,12 @@ namespace Sello.Api.Controllers
     public class ProductsController : RestApiController
     {
         private const string ProductAddedEvent = "Product Added";
-        private readonly ITelemetry telemetry;
+        private readonly ITelemetry _telemetry;
         private ProductsRepository _productsRepository;
 
         public ProductsController(ITelemetry telemetry)
         {
-            this.telemetry = telemetry;
+            this._telemetry = telemetry;
         }
 
         /// <summary>
@@ -30,9 +30,13 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("product")]
+        [SwaggerOperation("Get All Products")]
         [SwaggerResponse(HttpStatusCode.OK, "A list of all products", typeof(List<ProductInformationContract>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
+#if MANAGEMENT_API
+        [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
+#endif
         public async Task<IHttpActionResult> Get()
         {
             var productsRepository = await GetOrCreateProductsRepositoryAsync();
@@ -48,10 +52,14 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("product/{productId}")]
+        [SwaggerOperation("Get Product")]
         [SwaggerResponse(HttpStatusCode.OK, "Details about a product", typeof(ProductInformationContract))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Product not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
+#if MANAGEMENT_API
+        [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
+#endif
         public async Task<IHttpActionResult> Get(string productId)
         {
             var productsRepository = await GetOrCreateProductsRepositoryAsync();
@@ -71,10 +79,14 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("product")]
+        [SwaggerOperation("Add New Product")]
         [SwaggerResponse(HttpStatusCode.Created, "Information about the added product", typeof(NewProductContract))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "No valid product was specified.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
+#if PUBLIC_API
+        [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
+#endif
         public async Task<IHttpActionResult> Post(NewProductContract newProduct)
         {
             var product = Mapper.Map<Product>(newProduct);
@@ -110,7 +122,7 @@ namespace Sello.Api.Controllers
                 {"Price", productInformation.Price.ToString("C")}
             };
 
-            telemetry.TrackEvent(ProductAddedEvent, eventContext);
+            _telemetry.TrackEvent(ProductAddedEvent, eventContext);
         }
     }
 }

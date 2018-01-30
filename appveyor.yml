@@ -21,6 +21,11 @@ platform: Any CPU
 # build configuration, i.e. Debug, Release, etc.
 configuration: Release
 
+# only build master branch
+branches:
+  only:
+  - master
+
 # build solution
 build:
   parallel: true
