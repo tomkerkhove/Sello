@@ -30,6 +30,7 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("product")]
+        [SwaggerOperation("Get All Products")]
         [SwaggerResponse(HttpStatusCode.OK, "A list of all products", typeof(List<ProductInformationContract>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
@@ -51,6 +52,7 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("product/{productId}")]
+        [SwaggerOperation("Get Product")]
         [SwaggerResponse(HttpStatusCode.OK, "Details about a product", typeof(ProductInformationContract))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Product not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
@@ -77,6 +79,7 @@ namespace Sello.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("product")]
+        [SwaggerOperation("Add New Product")]
         [SwaggerResponse(HttpStatusCode.Created, "Information about the added product", typeof(NewProductContract))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "No valid product was specified.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
