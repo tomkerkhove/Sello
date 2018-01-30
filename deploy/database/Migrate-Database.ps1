@@ -12,8 +12,7 @@ function Verify-MigrationToolIsAvailable ([string]$migrateToolPath) {
     Write-Host "Migration tool exists on the following location: $migrateToolPath"
 }
 
-Function Execute-MigrationTool ($commandTitle, $commandPath, $commandArguments)
-{
+function Execute-MigrationTool ($commandTitle, $commandPath, $commandArguments) {
     $processInfo = New-Object System.Diagnostics.ProcessStartInfo
     $processInfo.FileName = $commandPath
     $processInfo.RedirectStandardError = $true
@@ -34,18 +33,10 @@ Function Execute-MigrationTool ($commandTitle, $commandPath, $commandArguments)
 function Migrate-Database ([string]$migrateToolPath, [string]$connectionString, [string]$databaseContextDll) {
     
     $databaseContextDllFolder = Split-Path -Path $databaseContextDll
-    Write-Host $databaseContextDllFolder
     $copiedMigrateToolPath = [System.IO.Path]::Combine($databaseContextDllFolder, "migrate.exe");
-    Write-Host "Folder: $($copiedMigrateToolPath)"
-    Write-Host "Folder: $($migrateToolPath)"
-    Write-Host "Folder: $($databaseContextDll)"
-    Write-Host "Folder: $($databaseContextDllFolder)"
     Copy-Item "$(Split-Path -Path $migrateToolPath)/*" $databaseContextDllFolder
-
-    Write-Host $migrateToolPath
-    Write-Host (Test-Path $copiedMigrateToolPath)
     
-    $toolArguments = """$databaseContextDll"" /connectionString=""$connectionString"" /connectionProviderName=""System.Data.SqlClient"""
+    $toolArguments = """$databaseContextDll"" /connectionString=""$connectionString"" /connectionProviderName=""System.Data.SqlClient"" /verbose"
     Write-Output "Invoking Migrate.exe using arguments $toolArguments for tool $copiedMigrateToolPath" 
 
     $migrationProcess = Execute-MigrationTool "Run Migrate.exe" $copiedMigrateToolPath $toolArguments
