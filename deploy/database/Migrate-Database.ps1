@@ -36,7 +36,8 @@ function Migrate-Database ([string]$migrateToolPath, [string]$connectionString, 
     $copiedMigrateToolPath = [System.IO.Path]::Combine($databaseContextDllFolder, "migrate.exe");
     Copy-Item "$(Split-Path -Path $migrateToolPath)/*" $databaseContextDllFolder
     
-    $toolArguments = """$databaseContextDll"" /connectionString=""$connectionString"" /connectionProviderName=""System.Data.SqlClient"" /verbose"
+    $databaseContextDllName = [System.IO.Path]::GetFileNameWithoutExtension($databaseContextDll) + [System.IO.Path]::GetExtension($databaseContextDll)
+    $toolArguments = """$databaseContextDllName"" /connectionString=""$connectionString"" /connectionProviderName=""System.Data.SqlClient"" /verbose"
     Write-Output "Invoking Migrate.exe using arguments $toolArguments for tool $copiedMigrateToolPath" 
 
     $migrationProcess = Execute-MigrationTool "Run Migrate.exe" $copiedMigrateToolPath $toolArguments
