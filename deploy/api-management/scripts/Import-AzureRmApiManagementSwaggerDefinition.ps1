@@ -2,7 +2,7 @@ param
 (
     [string] $apiManagementInstanceName = $(throw "The API Management instance name is required"),
     [string] $resourceGroupName = $(throw "Resource group name is required"),
-    [string] $swaggerDefinitionPath = $(throw "Swagger file is required"),
+    [string] $swaggerDefinitionPath = $(throw "Path to Swagger definition is required"),
     [string] $apiId = $(throw "Id of the logical Api is required"),
     [string] $apiUrlSuffix = $(throw "Url suffix of the api url suffix is required"),
     [string] $apiDefaultName="",
