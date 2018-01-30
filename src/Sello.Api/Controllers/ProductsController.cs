@@ -17,12 +17,12 @@ namespace Sello.Api.Controllers
     public class ProductsController : RestApiController
     {
         private const string ProductAddedEvent = "Product Added";
-        private readonly ITelemetry telemetry;
+        private readonly ITelemetry _telemetry;
         private ProductsRepository _productsRepository;
 
         public ProductsController(ITelemetry telemetry)
         {
-            this.telemetry = telemetry;
+            this._telemetry = telemetry;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Sello.Api.Controllers
                 {"Price", productInformation.Price.ToString("C")}
             };
 
-            telemetry.TrackEvent(ProductAddedEvent, eventContext);
+            _telemetry.TrackEvent(ProductAddedEvent, eventContext);
         }
     }
 }
