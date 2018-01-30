@@ -1,95 +1,95 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "v1",
-      "title": "Sello Management API",
-      "description": "APIs exposed by the Sello platform",
-      "contact": {
-        "name": "Tom Kerkhove",
-        "url": "https://github.com/tomkerkhove/sello"
-      },
-      "license": {
-        "name": "MIT License",
-        "url": "https://github.com/tomkerkhove/sello/blob/master/LICENSE"
-      }
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Sello API - Management",
+    "description": "APIs exposed by the Sello platform",
+    "contact": {
+      "name": "Tom Kerkhove",
+      "url": "https://github.com/tomkerkhove/sello"
     },
-    "host": "localhost:1330",
-    "schemes": [
-      "http"
-    ],
-    "paths": {
-      "/api/v1/product": {
-        "post": {
-          "tags": [
-            "Products"
-          ],
-          "summary": "Add a new product to the catalog a list of all products",
-          "operationId": "Add New Product",
-          "consumes": [
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml",
-            "application/x-www-form-urlencoded"
-          ],
-          "produces": [
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-          ],
-          "parameters": [
-            {
-              "name": "newProduct",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Sello.Api.Contracts.NewProductContract"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "type": "object"
-              }
-            },
-            "201": {
-              "description": "Information about the added product",
-              "schema": {
-                "$ref": "#/definitions/Sello.Api.Contracts.NewProductContract"
-              }
-            },
-            "400": {
-              "description": "No valid product was specified."
-            },
-            "500": {
-              "description": "The request could not be completed successfully, please try again."
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/tomkerkhove/sello/blob/master/LICENSE"
+    }
+  },
+  "host": "localhost:1337",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/v1/product": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Add a new product to the catalog a list of all products",
+        "operationId": "Add New Product",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "newProduct",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sello.Api.Contracts.NewProductContract"
             }
           }
-        }
-      }
-    },
-    "definitions": {
-      "Sello.Api.Contracts.NewProductContract": {
-        "description": "Information concerning a new product that is being added to the catalog",
-        "type": "object",
-        "properties": {
-          "Name": {
-            "description": "Name of the product",
-            "type": "string"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
           },
-          "Description": {
-            "description": "Description about the product",
-            "type": "string"
+          "201": {
+            "description": "Information about the added product",
+            "schema": {
+              "$ref": "#/definitions/Sello.Api.Contracts.NewProductContract"
+            }
           },
-          "Price": {
-            "format": "double",
-            "description": "Price for buying the product",
-            "type": "number"
+          "400": {
+            "description": "No valid product was specified."
+          },
+          "500": {
+            "description": "The request could not be completed successfully, please try again."
           }
         }
       }
     }
+  },
+  "definitions": {
+    "Sello.Api.Contracts.NewProductContract": {
+      "description": "Information concerning a new product that is being added to the catalog",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "description": "Name of the product",
+          "type": "string"
+        },
+        "Description": {
+          "description": "Description about the product",
+          "type": "string"
+        },
+        "Price": {
+          "format": "double",
+          "description": "Price for buying the product",
+          "type": "number"
+        }
+      }
+    }
   }
+}
