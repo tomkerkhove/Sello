@@ -1,0 +1,198 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "v1",
+      "title": "Sello API",
+      "description": "APIs exposed by the Sello platform",
+      "contact": {
+        "name": "Tom Kerkhove",
+        "url": "https://github.com/tomkerkhove/sello"
+      },
+      "license": {
+        "name": "MIT License",
+        "url": "https://github.com/tomkerkhove/sello/blob/master/LICENSE"
+      }
+    },
+    "host": "localhost:1330",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/api/v1/order": {
+        "post": {
+          "tags": [
+            "Orders"
+          ],
+          "summary": "Creates a new order",
+          "operationId": "Create Order",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "order",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Sello.Api.Contracts.OrderContract"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "object"
+              }
+            },
+            "201": {
+              "description": "Order was created"
+            },
+            "400": {
+              "description": "Order failed to validate",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "404": {
+              "description": "Product that was mentioned in the order was not found"
+            },
+            "500": {
+              "description": "The request could not be completed successfully, please try again."
+            }
+          }
+        }
+      },
+      "/api/v1/product": {
+        "get": {
+          "tags": [
+            "Products"
+          ],
+          "summary": "Gets a list of all products",
+          "operationId": "Get All Products",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "A list of all products",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Sello.Api.Contracts.ProductInformationContract"
+                }
+              }
+            },
+            "500": {
+              "description": "The request could not be completed successfully, please try again."
+            }
+          }
+        }
+      },
+      "/api/v1/product/{productId}": {
+        "get": {
+          "tags": [
+            "Products"
+          ],
+          "summary": "Gets the details for a specific product in the catalog",
+          "operationId": "Get Product",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "productId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details about a product",
+              "schema": {
+                "$ref": "#/definitions/Sello.Api.Contracts.ProductInformationContract"
+              }
+            },
+            "404": {
+              "description": "Product not found"
+            },
+            "500": {
+              "description": "The request could not be completed successfully, please try again."
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Sello.Api.Contracts.OrderContract": {
+        "type": "object",
+        "properties": {
+          "Customer": {
+            "$ref": "#/definitions/Sello.Api.Contracts.CustomerContract"
+          },
+          "Product": {
+            "$ref": "#/definitions/Sello.Api.Contracts.ProductInformationContract"
+          }
+        }
+      },
+      "Sello.Api.Contracts.CustomerContract": {
+        "type": "object",
+        "properties": {
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "EmailAddress": {
+            "type": "string"
+          }
+        }
+      },
+      "Sello.Api.Contracts.ProductInformationContract": {
+        "description": "Information concerning a product that is being offered",
+        "type": "object",
+        "properties": {
+          "Id": {
+            "description": "Id of the product",
+            "type": "string"
+          },
+          "Name": {
+            "description": "Name of the product",
+            "type": "string"
+          },
+          "Description": {
+            "description": "Description about the product",
+            "type": "string"
+          },
+          "Price": {
+            "format": "double",
+            "description": "Price for buying the product",
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
