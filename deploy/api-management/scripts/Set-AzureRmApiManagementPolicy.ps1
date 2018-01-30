@@ -2,7 +2,7 @@ Param(
     [string] $apiManagementInstanceName = $(throw "The API Management instance name is required"),
     [string] $resourceGroupName = $(throw "Resource group name is required"),
     [string] $policyDefinitionPath = $(throw "Path to the policy definition is required"),
-    [string]$productId,
+    [string]$productId = $(throw "Id of the product to apply the policy to is required"),
     [bool]$isLocalExecution = $false,
     [string] $subscriptionId = ""
 )
@@ -21,10 +21,6 @@ function Verify-PolicyDefinitionLocation ([string]$policyDefinitionPath) {
 }
 
 function Set-AzureApiManagementPolicyForProduct ([string]$apiManagementInstanceName,[string]$resourceGroupName, [string]$policyDefinitionPath, [string]$productId) {
-    if([string]::IsNullOrWhiteSpace($productId)){
-        throw [System.Exception] "Product id is required"
-    }
-
     $policyDefinition = Get-Content $policyDefinitionPath
     Write-Host "Applying policy: $policyDefinition" -Verbose
 
