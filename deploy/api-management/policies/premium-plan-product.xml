@@ -13,7 +13,7 @@
 <policies>
     <inbound>
         <base />
-        <rate-limit-by-key calls="#{Tenant.Throttling.MaxCalls}#" renewal-period="#{Tenant.Throttling.RenewalPeriod}#" counter-key="@(context.Request.IpAddress)" />
+        <rate-limit-by-key calls="#{Plans.Premium.Throttling.MaxCalls}#" renewal-period="#{Plans.Premium.Throttling.RenewalPeriod}#" counter-key="@(context.Request.IpAddress)" />
     </inbound>
     <backend>
         <base />
