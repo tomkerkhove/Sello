@@ -15,12 +15,13 @@ This also enables them to only expose the APIs that 3rd parties need and keep th
 
 In Azure API Management we have the following setup:
 
-||**3rd Party**|**Management**|
-|Product|Sello|Sello Management|
-|Published in Developer Portal|:white_check_mark:|:x:|
-|Subscription Required|:white_check_mark:|:white_check_mark:|
-|Subscription Approval|:white_check_mark:|:white_check_mark:|
-|API(s)|<ul><li>Sello API</li></ul>|<ul><li>Sello API</li><li>Sello Management API</li></ul>|
+|                             |**3rd Party**              |**Management**                                          |
+|:----------------------------|:-------------------------:|:------------------------------------------------------:|
+|Product                      |Sello                      |Sello Management                                        |
+|Published in Developer Portal|:white_check_mark:         |:x:                                                     |
+|Subscription Required        |:white_check_mark:         |:white_check_mark:                                      |
+|Subscription Approval        |:white_check_mark:         |:white_check_mark:                                      |
+|API(s)                       |<ul><li>Sello API</li></ul>|<ul><li>Sello API</li><li>Sello Management API</li></ul>|
 
 These will communicate with the physical API that is hosted in an Azure Web App.
 
