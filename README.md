@@ -15,9 +15,10 @@ This also enables them to only expose the APIs that 3rd parties need and keep th
 
 In Azure API Management we have the following setup:
 
+|                             |Party                                                                               |
 |                             |**3rd Party**              |**Management**                                          |
 |:----------------------------|:-------------------------:|:------------------------------------------------------:|
-|Product                      |Sello                      |Sello Management                                        |
+|Product Name                 |Sello                      |Sello Management                                        |
 |Published in Developer Portal|:white_check_mark:         |:x:                                                     |
 |Subscription Required        |:white_check_mark:         |:white_check_mark:                                      |
 |Subscription Approval        |:white_check_mark:         |:white_check_mark:                                      |
