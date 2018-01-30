@@ -12,6 +12,8 @@ namespace Sello.Api
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
+            var apiName = DetermineApiName();
+
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                     {
@@ -31,7 +33,7 @@ namespace Sello.Api
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "Sello API")
+                        c.SingleApiVersion("v1", apiName)
                             .Description("APIs exposed by the Sello platform")
                             .Contact(contactBuilder => contactBuilder.Name("Tom Kerkhove").Url("https://github.com/tomkerkhove/sello"))
                             .License(licenseBuilder => licenseBuilder.Name("MIT License").Url("https://github.com/tomkerkhove/sello/blob/master/LICENSE"));
@@ -129,7 +131,7 @@ namespace Sello.Api
                         // Swagger docs and UI. However, if you have multiple types in your API with the same class name, you'll
                         // need to opt out of this behavior to avoid Schema Id conflicts.
                         //
-                        //c.UseFullTypeNameInSchemaIds();
+                        c.UseFullTypeNameInSchemaIds();
 
                         // Alternatively, you can provide your own custom strategy for inferring SchemaId's for
                         // describing "complex" types in your API.
@@ -252,6 +254,19 @@ namespace Sello.Api
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
                     });
+        }
+
+        private static string DetermineApiName()
+        {
+            var apiName = "Sello";
+
+#if MANAGEMENT_API
+            apiName = apiName + " Management API";
+#else
+            apiName = apiName + " API";
+#endif
+
+            return apiName;
         }
 
         private static string GetXmlCommentsPath()
