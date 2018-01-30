@@ -23,11 +23,10 @@ These will communicate with the physical API that is hosted in an Azure Web App.
 
 |:rotating_light: **Security**                                                                        |
 |-----------------------------------------------------------------------------------------------------|
-| For the sake of the demo there are some gaps in API security:
-- Physical API has no authentication and authorization
-- Physical API is publically reachable
-- No security between Azure API Management & the physical API
-
+| For the sake of the demo there are some gaps in API security:<ul>
+<li>Physical API has no authentication and authorization</li>
+<li>Physical API is publically reachable</li>
+<li>No security between Azure API Management & the physical API</li></ul>
 This is not safe for production workloads and thus not recommended.                                   |
 
 ## License Information
