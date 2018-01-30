@@ -29,5 +29,18 @@ These will communicate with the physical API that is hosted in an Azure Web App.
 |-----------------------------------------------------------------------------------------------------|
 | For the sake of the demo there are some gaps in API security:<ul><li>Physical API has no authentication and authorization</li><li>Physical API is publically reachable</li><li>No security between Azure API Management & the physical API</li></ul>This is not safe for production workloads and thus not recommended.|
 
+### Automating Azure API Management
+We are currently automatically importing the Swagger specification for both the public & management API.
+
+This can be achieved as following:
+```PowerShell
+Import-AzureRmApiManagementSwaggerDefinition.ps1 -apiManagementInstanceName "<instance-name>" -resourceGroupName "<resource-group-name>" -swaggerDefinitionPath "<swagger-definition-path>" -apiId "<api-management-api-id>" -apiUrlSuffix "<logical-api-suffix>" -apiUrl "<url-physical-api>" -apiDefaultName "<default-api-name-in-swagger-definition>" -apiName "<desired-logical-api-name>"
+```
+
+Next to we automatically apply policies on a product-level:
+```PowerShell
+Set-AzureRmApiManagementPolicy.ps1 -apiManagementInstanceName "<instance-name>" -resourceGroupName "<resource-group-name>" -policyDefinitionPath "<policy-definition-path>" -productId "<api-management-product-id>"
+```
+
 ## License Information
 This is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the web application. But you always need to state that Codit is the original author of this web application.
