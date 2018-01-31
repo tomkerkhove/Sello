@@ -3,5 +3,4 @@
   <setParameter name="Common.Environment" value="Prod"/>
   <setParameter name="Telemetry.Key" value="#{Telemetry.Key}#"/>
   <setParameter name="Security.KeyVault.Uri" value="#{Security.KeyVault.Uri}#"/>
-  <setParameter name="Sql.Codito.ConnectionString" value="N/A"/>
 </parameters>

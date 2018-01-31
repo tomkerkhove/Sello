@@ -9,7 +9,4 @@
   <parameter name="Security.KeyVault.Uri" description="Uri of the Azure Key Vault to use" defaultvalue="">
     <parameterentry kind="XmlFile" scope="\\Web.config" match="/configuration/appSettings/add[@key='Security.KeyVault.Uri']/@value"/>
   </parameter>
-  <parameter name="Sql.Codito.ConnectionString" description="Local connection string for Codito" defaultvalue="N/A">
-    <parameterentry kind="XmlFile" scope="\\Web.config" match="/configuration/appSettings/add[@key='Sql.Codito.ConnectionString']/@value"/>
-  </parameter>
 </parameters>
