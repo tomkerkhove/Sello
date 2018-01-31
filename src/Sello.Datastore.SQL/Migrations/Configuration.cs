@@ -37,7 +37,7 @@ namespace Sello.Datastore.SQL.Migrations
 
         private static void AddProductIfNotPresent(PlatformDatabaseContext context, Product productToAdd)
         {
-            if (context.Products.Any(product => product.ExternalId.ToLower() == productToAdd.ExternalId.ToLower()) == false)
+            if (context.Products.Any(product => product.Name.ToLower() == productToAdd.Name.ToLower()) == false)
             {
                 context.Products.Add(productToAdd);
             }
