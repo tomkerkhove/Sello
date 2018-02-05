@@ -4,6 +4,37 @@
         <name>Sello.Api</name>
     </assembly>
     <members>
+        <member name="M:Sello.Api.Controllers.HealthController.Get">
+            <summary>
+            Gets the current health status of the API
+            </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.OrdersController.Post(Sello.Api.Contracts.OrderContract)">
+            <summary>
+                Creates a new order
+            </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.ProductsController.Get">
+            <summary>
+                Gets a list of all products
+            </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.ProductsController.Get(System.String)">
+            <summary>
+                Gets the details for a specific product in the catalog
+            </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.ProductsController.Post(Sello.Api.Contracts.NewProductContract)">
+            <summary>
+                Add a new product to the catalog a list of all products
+            </summary>
+        </member>
+        <member name="M:Sello.Api.Controllers.RestApiController.ComposeResourceLocation(System.String)">
+            <summary>
+                Creates the URI for a specific resource
+            </summary>
+            <param name="resourceId">Identifier of a resource</param>
+        </member>
         <member name="T:Sello.Api.Contracts.NewProductContract">
             <summary>
                 Information concerning a new product that is being added to the catalog
@@ -48,32 +79,6 @@
             <summary>
                 Price for buying the product
             </summary>
-        </member>
-        <member name="M:Sello.Api.Controllers.OrdersController.Post(Sello.Api.Contracts.OrderContract)">
-            <summary>
-                Creates a new order
-            </summary>
-        </member>
-        <member name="M:Sello.Api.Controllers.ProductsController.Get">
-            <summary>
-                Gets a list of all products
-            </summary>
-        </member>
-        <member name="M:Sello.Api.Controllers.ProductsController.Get(System.String)">
-            <summary>
-                Gets the details for a specific product in the catalog
-            </summary>
-        </member>
-        <member name="M:Sello.Api.Controllers.ProductsController.Post(Sello.Api.Contracts.NewProductContract)">
-            <summary>
-                Add a new product to the catalog a list of all products
-            </summary>
-        </member>
-        <member name="M:Sello.Api.Controllers.RestApiController.ComposeResourceLocation(System.String)">
-            <summary>
-                Creates the URI for a specific resource
-            </summary>
-            <param name="resourceId">Identifier of a resource</param>
         </member>
         <member name="T:Sello.Api.Resources.ValidationMessages">
             <summary>

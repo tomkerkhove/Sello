@@ -9,6 +9,7 @@ using Owin;
 using Sello.Api.Contracts.Mapping;
 using Sello.Api.Owin;
 using Sello.Api.Owin.ExceptionHandling;
+using Sello.Api.Swagger;
 using Sello.Common.Configuration;
 using Sello.Common.Configuration.Interfaces;
 using Sello.Common.DependencyInjection;

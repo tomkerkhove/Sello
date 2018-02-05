@@ -34,7 +34,7 @@ namespace Sello.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "A list of all products", typeof(List<ProductInformationContract>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
-#if MANAGEMENT_API
+#if MANAGEMENT_API || OPERATIONS_API
         [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
 #endif
         public async Task<IHttpActionResult> Get()
@@ -57,7 +57,7 @@ namespace Sello.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Product not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
-#if MANAGEMENT_API
+#if MANAGEMENT_API || OPERATIONS_API
         [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
 #endif
         public async Task<IHttpActionResult> Get(string productId)
@@ -84,7 +84,7 @@ namespace Sello.Api.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "No valid product was specified.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
-#if PUBLIC_API
+#if PUBLIC_API || OPERATIONS_API
         [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
 #endif
         public async Task<IHttpActionResult> Post(NewProductContract newProduct)

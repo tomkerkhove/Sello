@@ -2,7 +2,7 @@ using System.Web.Hosting;
 using System.Web.Http;
 using Swashbuckle.Application;
 
-namespace Sello.Api
+namespace Sello.Api.Swagger
 {
     public class SwaggerConfig
     {
@@ -24,7 +24,7 @@ namespace Sello.Api
                     // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
                     // about them, you can use the "Schemes" option as shown below.
                     //
-                    swaggerDocsConfig.Schemes(new[] { "https" });
+                    swaggerDocsConfig.Schemes(new[] {"https"});
 
                     // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "Info" object to
                     // hold additional metadata for an API. Version and title are required but you can also provide
@@ -261,6 +261,10 @@ namespace Sello.Api
 
 #if MANAGEMENT_API
             apiName = apiName + " - Management";
+#endif
+
+#if OPERATIONS_API
+            apiName = apiName + " - Operations";
 #endif
 
             return apiName;
