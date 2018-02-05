@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Sello.Api.Contracts;
+using Sello.Api.Exceptions;
 using Sello.Api.Validators;
 using Sello.Common.Telemetry.Interfaces;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
 using Swashbuckle.Swagger.Annotations;
+using IConfigurationProvider = Sello.Common.Configuration.Interfaces.IConfigurationProvider;
 
 namespace Sello.Api.Controllers
 {
@@ -24,9 +26,9 @@ namespace Sello.Api.Controllers
         private OrdersRepository _ordersRepository;
         private ProductsRepository _productsRepository;
 
-        public OrdersController(ITelemetry telemetry)
+        public OrdersController(ITelemetry telemetry, IConfigurationProvider configurationProvider) : base(configurationProvider)
         {
-            this._telemetry = telemetry;
+            _telemetry = telemetry;
         }
 
         /// <summary>
@@ -45,6 +47,11 @@ namespace Sello.Api.Controllers
 #endif
         public async Task<IHttpActionResult> Post([FromBody] OrderContract order)
         {
+            if (IsChaosMonkeyUnleashed())
+            {
+                throw new ChaosMonkeyException();
+            }
+
             var validationResult = await ValidateOrderAsync(order);
             if (validationResult != null)
             {

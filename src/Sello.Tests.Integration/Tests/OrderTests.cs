@@ -14,8 +14,6 @@ namespace Sello.Tests.Integration.Tests
     [Category("Integration")]
     public class OrderTests
     {
-        private readonly SelloService selloService = new SelloService();
-
         [Test]
         public async Task Orders_CreateForExistingProduct_ShouldReturnHttpOk()
         {
@@ -23,6 +21,7 @@ namespace Sello.Tests.Integration.Tests
             const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
+            var selloService = new SelloService();
             var customerEmailAddress = $"{Guid.NewGuid().ToString()}@codit.eu";
             var productToBuy = await GetProductFromCatalogAsync();
 
@@ -61,42 +60,6 @@ namespace Sello.Tests.Integration.Tests
         }
 
         [Test]
-        public async Task Orders_CreateForExistingProductWithChangedPrice_ShouldReturnHttpBadRequest()
-        {
-            // Arrange
-            const string ordersUrl = "api/v1/order";
-            const string customerFirstName = "Tom";
-            const string customerLastName = "Kerkhove";
-            const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
-            var productToBuy = await GetProductFromCatalogAsync();
-            productToBuy.Price = productToBuy.Price * 2;
-
-            var customer = new CustomerContract
-            {
-                FirstName = customerFirstName,
-                LastName = customerLastName,
-                EmailAddress = customerEmailAddress
-            };
-            var order = new OrderContract
-            {
-                Customer = customer,
-                Product = productToBuy
-            };
-
-            // Act
-            var response = await selloService.PostResponseAsync(ordersUrl, order);
-
-            // Assert
-            Assert.NotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.NotNull(response.Content);
-            var rawResponse = await response.Content.ReadAsStringAsync();
-            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
-            Assert.IsTrue(validationMessages.Any(
-                validationMessage => validationMessage == ValidationMessages.Product_PriceIsNotCorrect));
-        }
-
-        [Test]
         public async Task Orders_CreateForExistingProductWithChangedDescription_ShouldReturnHttpBadRequest()
         {
             // Arrange
@@ -104,6 +67,7 @@ namespace Sello.Tests.Integration.Tests
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
             var productToBuy = await GetProductFromCatalogAsync();
             productToBuy.Description = "Altered description";
 
@@ -133,35 +97,6 @@ namespace Sello.Tests.Integration.Tests
         }
 
         [Test]
-        public async Task Orders_CreateWithoutProduct_ShouldReturnHttpBadRequest()
-        {
-            // Arrange
-            const string ordersUrl = "api/v1/order";
-            const string customerFirstName = "Tom";
-            const string customerLastName = "Kerkhove";
-            const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
-
-            var customer = new CustomerContract
-            {
-                FirstName = customerFirstName,
-                LastName = customerLastName,
-                EmailAddress = customerEmailAddress
-            };
-            var order = new OrderContract
-            {
-                Customer = customer,
-                Product = null
-            };
-
-            // Act
-            var response = await selloService.PostResponseAsync(ordersUrl, order);
-
-            // Assert
-            Assert.NotNull(response);
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
-        }
-
-        [Test]
         public async Task Orders_CreateForExistingProductWithChangedName_ShouldReturnHttpBadRequest()
         {
             // Arrange
@@ -169,6 +104,7 @@ namespace Sello.Tests.Integration.Tests
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
             var productToBuy = await GetProductFromCatalogAsync();
             productToBuy.Name = "Altered name";
 
@@ -198,6 +134,136 @@ namespace Sello.Tests.Integration.Tests
         }
 
         [Test]
+        public async Task Orders_CreateForExistingProductWithChangedPrice_ShouldReturnHttpBadRequest()
+        {
+            // Arrange
+            const string ordersUrl = "api/v1/order";
+            const string customerFirstName = "Tom";
+            const string customerLastName = "Kerkhove";
+            const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
+            var productToBuy = await GetProductFromCatalogAsync();
+            productToBuy.Price = productToBuy.Price * 2;
+
+            var customer = new CustomerContract
+            {
+                FirstName = customerFirstName,
+                LastName = customerLastName,
+                EmailAddress = customerEmailAddress
+            };
+            var order = new OrderContract
+            {
+                Customer = customer,
+                Product = productToBuy
+            };
+
+            // Act
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.NotNull(response);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Product_PriceIsNotCorrect));
+        }
+
+        [Test]
+        public async Task Orders_CreateForExistingProductWithChoasEnabled_ShouldReturnHttpInternalServerError()
+        {
+            // Arrange
+            const string ordersUrl = "api/v1/order";
+            const string customerFirstName = "Tom";
+            const string customerLastName = "Kerkhove";
+            var selloService = new SelloService(unleashChaosMonkeys: true);
+            var customerEmailAddress = $"{Guid.NewGuid().ToString()}@codit.eu";
+            var productToBuy = await GetProductFromCatalogAsync();
+
+            var customer = new CustomerContract
+            {
+                FirstName = customerFirstName,
+                LastName = customerLastName,
+                EmailAddress = customerEmailAddress
+            };
+            var order = new OrderContract
+            {
+                Customer = customer,
+                Product = productToBuy
+            };
+
+            // Act
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
+        [Test]
+        public async Task Orders_CreateForExistingProductWithoutCustomer_ShouldReturnHttpBadRequest()
+        {
+            // Arrange
+            const string ordersUrl = "api/v1/order";
+            var selloService = new SelloService();
+            var productToBuy = await GetProductFromCatalogAsync();
+
+            var order = new OrderContract
+            {
+                Customer = null,
+                Product = productToBuy
+            };
+
+            // Act
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.NotNull(response);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Customer_IsRequired));
+        }
+
+        [Test]
+        public async Task Orders_CreateForExistingProductWithoutCustomerEmailAddress_ShouldReturnHttpBadRequest()
+        {
+            // Arrange
+            const string ordersUrl = "api/v1/order";
+            const string customerFirstName = "Tom";
+            const string customerLastName = "Kerkhove";
+            var selloService = new SelloService();
+            var customerEmailAddress = string.Empty;
+            var productToBuy = await GetProductFromCatalogAsync();
+
+            var customer = new CustomerContract
+            {
+                FirstName = customerFirstName,
+                LastName = customerLastName,
+                EmailAddress = customerEmailAddress
+            };
+            var order = new OrderContract
+            {
+                Customer = customer,
+                Product = productToBuy
+            };
+
+            // Act
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.NotNull(response);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.NotNull(response.Content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
+            Assert.IsTrue(validationMessages.Any(
+                validationMessage => validationMessage == ValidationMessages.Customer_EmailAddressIsRequired));
+        }
+
+        [Test]
         public async Task Orders_CreateForExistingProductWithoutCustomerFirstName_ShouldReturnHttpBadRequest()
         {
             // Arrange
@@ -205,6 +271,7 @@ namespace Sello.Tests.Integration.Tests
             var customerFirstName = string.Empty;
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
             var productToBuy = await GetProductFromCatalogAsync();
 
             var customer = new CustomerContract
@@ -240,6 +307,7 @@ namespace Sello.Tests.Integration.Tests
             const string customerFirstName = "Tom";
             var customerLastName = string.Empty;
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
             var productToBuy = await GetProductFromCatalogAsync();
 
             var customer = new CustomerContract
@@ -268,67 +336,6 @@ namespace Sello.Tests.Integration.Tests
         }
 
         [Test]
-        public async Task Orders_CreateForExistingProductWithoutCustomerEmailAddress_ShouldReturnHttpBadRequest()
-        {
-            // Arrange
-            const string ordersUrl = "api/v1/order";
-            const string customerFirstName = "Tom";
-            const string customerLastName = "Kerkhove";
-            var customerEmailAddress = string.Empty;
-            var productToBuy = await GetProductFromCatalogAsync();
-
-            var customer = new CustomerContract
-            {
-                FirstName = customerFirstName,
-                LastName = customerLastName,
-                EmailAddress = customerEmailAddress
-            };
-            var order = new OrderContract
-            {
-                Customer = customer,
-                Product = productToBuy
-            };
-
-            // Act
-            var response = await selloService.PostResponseAsync(ordersUrl, order);
-
-            // Assert
-            Assert.NotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.NotNull(response.Content);
-            var rawResponse = await response.Content.ReadAsStringAsync();
-            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
-            Assert.IsTrue(validationMessages.Any(
-                validationMessage => validationMessage == ValidationMessages.Customer_EmailAddressIsRequired));
-        }
-
-        [Test]
-        public async Task Orders_CreateForExistingProductWithoutCustomer_ShouldReturnHttpBadRequest()
-        {
-            // Arrange
-            const string ordersUrl = "api/v1/order";
-            var productToBuy = await GetProductFromCatalogAsync();
-
-            var order = new OrderContract
-            {
-                Customer = null,
-                Product = productToBuy
-            };
-
-            // Act
-            var response = await selloService.PostResponseAsync(ordersUrl, order);
-
-            // Assert
-            Assert.NotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.NotNull(response.Content);
-            var rawResponse = await response.Content.ReadAsStringAsync();
-            var validationMessages = JsonConvert.DeserializeObject<List<string>>(rawResponse);
-            Assert.IsTrue(validationMessages.Any(
-                validationMessage => validationMessage == ValidationMessages.Customer_IsRequired));
-        }
-
-        [Test]
         public async Task Orders_CreateForNotExistingProduct_ShouldReturnHttpNotFound()
         {
             // Arrange
@@ -340,6 +347,7 @@ namespace Sello.Tests.Integration.Tests
             const string customerFirstName = "Tom";
             const string customerLastName = "Tom";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
 
             var customer = new CustomerContract
             {
@@ -364,6 +372,36 @@ namespace Sello.Tests.Integration.Tests
             var response = await selloService.PostResponseAsync(ordersUrl, order);
 
             // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Test]
+        public async Task Orders_CreateWithoutProduct_ShouldReturnHttpBadRequest()
+        {
+            // Arrange
+            const string ordersUrl = "api/v1/order";
+            const string customerFirstName = "Tom";
+            const string customerLastName = "Kerkhove";
+            const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
+            var selloService = new SelloService();
+
+            var customer = new CustomerContract
+            {
+                FirstName = customerFirstName,
+                LastName = customerLastName,
+                EmailAddress = customerEmailAddress
+            };
+            var order = new OrderContract
+            {
+                Customer = customer,
+                Product = null
+            };
+
+            // Act
+            var response = await selloService.PostResponseAsync(ordersUrl, order);
+
+            // Assert
+            Assert.NotNull(response);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 

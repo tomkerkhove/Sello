@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Sello.Api.Contracts;
+using Sello.Api.Exceptions;
 using Sello.Common.Telemetry.Interfaces;
 using Sello.Data.Repositories;
 using Sello.Datastore.SQL.Model;
 using Swashbuckle.Swagger.Annotations;
+using IConfigurationProvider = Sello.Common.Configuration.Interfaces.IConfigurationProvider;
 
 namespace Sello.Api.Controllers
 {
@@ -20,9 +22,9 @@ namespace Sello.Api.Controllers
         private readonly ITelemetry _telemetry;
         private ProductsRepository _productsRepository;
 
-        public ProductsController(ITelemetry telemetry)
+        public ProductsController(ITelemetry telemetry, IConfigurationProvider configurationProvider) : base(configurationProvider)
         {
-            this._telemetry = telemetry;
+            _telemetry = telemetry;
         }
 
         /// <summary>
@@ -39,6 +41,11 @@ namespace Sello.Api.Controllers
 #endif
         public async Task<IHttpActionResult> Get()
         {
+            if (IsChaosMonkeyUnleashed())
+            {
+                throw new ChaosMonkeyException();
+            }
+
             var productsRepository = await GetOrCreateProductsRepositoryAsync();
             var storedProducts = await productsRepository.GetAsync();
 
@@ -62,6 +69,11 @@ namespace Sello.Api.Controllers
 #endif
         public async Task<IHttpActionResult> Get(string productId)
         {
+            if (IsChaosMonkeyUnleashed())
+            {
+                throw new ChaosMonkeyException();
+            }
+
             var productsRepository = await GetOrCreateProductsRepositoryAsync();
             var storedProduct = await productsRepository.GetAsync(productId);
             if (storedProduct == null)
@@ -89,6 +101,11 @@ namespace Sello.Api.Controllers
 #endif
         public async Task<IHttpActionResult> Post(NewProductContract newProduct)
         {
+            if (IsChaosMonkeyUnleashed())
+            {
+                throw new ChaosMonkeyException();
+            }
+
             var product = Mapper.Map<Product>(newProduct);
             product.ExternalId = Guid.NewGuid().ToString();
 

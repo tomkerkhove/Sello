@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Web.Http;
+using Sello.Common.Configuration.Interfaces;
 using Swashbuckle.Swagger.Annotations;
 
 namespace Sello.Api.Controllers
@@ -7,8 +8,12 @@ namespace Sello.Api.Controllers
     [RoutePrefix("api/v1")]
     public class HealthController : RestApiController
     {
+        public HealthController(IConfigurationProvider configurationProvider) : base(configurationProvider)
+        {
+        }
+
         /// <summary>
-        /// Gets the current health status of the API
+        ///     Gets the current health status of the API
         /// </summary>
         [HttpGet]
         [Route("health")]
@@ -20,6 +25,11 @@ namespace Sello.Api.Controllers
 #endif
         public IHttpActionResult Get()
         {
+            if (IsChaosMonkeyUnleashed())
+            {
+                return InternalServerError();
+            }
+
             // Return OK for now, if the API is unhealthy, it will return HTTP 500 anyway
             return Ok();
         }
