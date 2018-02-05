@@ -9,7 +9,7 @@ namespace Sello.Tests.Integration.Services
 {
     public class ProductService : SelloService
     {
-        public const string BaseUrl = "product";
+        public const string BaseUrl = "api/v1/product";
         private readonly SelloService _selloService = new SelloService();
 
         public async Task<List<ProductInformationContract>> GetAllAsync()

@@ -20,7 +20,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProduct_ShouldReturnHttpOk()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             var customerEmailAddress = $"{Guid.NewGuid().ToString()}@codit.eu";
@@ -64,7 +64,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithChangedPrice_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
@@ -100,7 +100,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithChangedDescription_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
@@ -136,7 +136,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateWithoutProduct_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
@@ -165,7 +165,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithChangedName_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
@@ -201,7 +201,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithoutCustomerFirstName_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             var customerFirstName = string.Empty;
             const string customerLastName = "Kerkhove";
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
@@ -236,7 +236,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithoutCustomerLastName_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             var customerLastName = string.Empty;
             const string customerEmailAddress = "Tom.Kerkhove@codit.eu";
@@ -271,7 +271,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithoutCustomerEmailAddress_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string customerFirstName = "Tom";
             const string customerLastName = "Kerkhove";
             var customerEmailAddress = string.Empty;
@@ -306,7 +306,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForExistingProductWithoutCustomer_ShouldReturnHttpBadRequest()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             var productToBuy = await GetProductFromCatalogAsync();
 
             var order = new OrderContract
@@ -332,7 +332,7 @@ namespace Sello.Tests.Integration.Tests
         public async Task Orders_CreateForNotExistingProduct_ShouldReturnHttpNotFound()
         {
             // Arrange
-            const string ordersUrl = "order";
+            const string ordersUrl = "api/v1/order";
             const string productId = "I-DO-NOT-EXIST";
             const string productName = "Validation Product";
             const string productDescription = "Product created by Integration Test, however it should never make it in";

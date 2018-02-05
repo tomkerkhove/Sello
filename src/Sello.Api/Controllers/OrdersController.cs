@@ -40,7 +40,7 @@ namespace Sello.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Product that was mentioned in the order was not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
-#if MANAGEMENT_API
+#if MANAGEMENT_API || OPERATIONS_API
         [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
 #endif
         public async Task<IHttpActionResult> Post([FromBody] OrderContract order)
