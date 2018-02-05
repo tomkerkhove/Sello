@@ -24,16 +24,16 @@ namespace Sello.Api.Controllers
 
         protected bool IsChaosMonkeyUnleashed()
         {
-            var rawSetting = ConfigurationProvider.GetSetting("Demo.UnleashChaosMonkey", isMandatory: false);
-            if (bool.TryParse(rawSetting, out var isChaosMonkeyUnleashed))
-            {
-                return isChaosMonkeyUnleashed;
-            }
-
             if (Request != null && Request.Headers.TryGetValues("X-Inject-Chaos-Monkey", out var headerValues))
             {
                 var isChaosMonkeyInjected = headerValues.FirstOrDefault();
                 return !string.IsNullOrWhiteSpace(isChaosMonkeyInjected);
+            }
+
+            var rawSetting = ConfigurationProvider.GetSetting("Demo.UnleashChaosMonkey", isMandatory: false);
+            if (bool.TryParse(rawSetting, out var isChaosMonkeyUnleashed))
+            {
+                return isChaosMonkeyUnleashed;
             }
 
             return false;

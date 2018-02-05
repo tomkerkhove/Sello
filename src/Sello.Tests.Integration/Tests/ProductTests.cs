@@ -13,17 +13,16 @@ namespace Sello.Tests.Integration.Tests
     [Category("Integration")]
     public class ProductTests
     {
-        private readonly SelloService _selloService = new SelloService();
-
         [Test]
         [Category("Smoke")]
         public async Task Products_ListAllProducts_ShouldReturnHttpOk()
         {
             // Arrange
             const string productsUrl = ProductService.BaseUrl;
+            var selloService = new SelloService();
 
             // Act
-            var response = await _selloService.GetResponseAsync(productsUrl);
+            var response = await selloService.GetResponseAsync(productsUrl);
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -33,10 +32,25 @@ namespace Sello.Tests.Integration.Tests
         }
 
         [Test]
+        public async Task Products_ListAllProductsWithChaosEnabled_ShouldReturnHttpOk()
+        {
+            // Arrange
+            const string productsUrl = ProductService.BaseUrl;
+            var selloService = new SelloService(unleashChaosMonkeys: true);
+
+            // Act
+            var response = await selloService.GetResponseAsync(productsUrl);
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
+        [Test]
         [Category("Smoke")]
         public async Task Products_GetProductDetailsForExistingProduct_ShouldReturnHttpOk()
         {
             // Arrange
+            var selloService = new SelloService();
             var productService = new ProductService();
             var products = await productService.GetAllAsync();
             Assert.NotNull(products);
@@ -44,7 +58,7 @@ namespace Sello.Tests.Integration.Tests
             var firstProduct = products.First();
 
             // Act
-            var response = await _selloService.GetResponseAsync($"{ProductService.BaseUrl}/{firstProduct.Id}");
+            var response = await selloService.GetResponseAsync($"{ProductService.BaseUrl}/{firstProduct.Id}");
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -57,10 +71,29 @@ namespace Sello.Tests.Integration.Tests
         }
 
         [Test]
-        public async Task Products_AddNewProductToCatalog_ShouldReturnHttpOk()
+        public async Task Products_GetProductDetailsForExistingProductWithChaosEnabled_ShouldReturnHttpInternalServerError()
+        {
+            // Arrange
+            var selloService = new SelloService(unleashChaosMonkeys:true);
+            var productService = new ProductService();
+            var products = await productService.GetAllAsync();
+            Assert.NotNull(products);
+            Assert.IsNotEmpty(products);
+            var firstProduct = products.First();
+
+            // Act
+            var response = await selloService.GetResponseAsync($"{ProductService.BaseUrl}/{firstProduct.Id}");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
+        [Test]
+        public async Task Products_AddNewProductToCatalogWithChaosEnabled_ShouldReturnHttpInternalServerError()
         {
             // Arrange
             const string productsUrl = ProductService.BaseUrl;
+            var selloService = new SelloService(unleashChaosMonkeys: true);
             var integrationTestId = Guid.NewGuid().ToString();
             var productName = $"Integration Product ({integrationTestId})";
             var productDescription = $"Product created by Integration Test - {integrationTestId}";
@@ -74,18 +107,10 @@ namespace Sello.Tests.Integration.Tests
             };
 
             // Act
-            var response = await _selloService.PostResponseAsync(productsUrl, newProduct);
+            var response = await selloService.PostResponseAsync(productsUrl, newProduct);
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            var rawContent = await response.Content.ReadAsStringAsync();
-            var productInformation = JsonConvert.DeserializeObject<ProductInformationContract>(rawContent);
-            Assert.NotNull(productInformation);
-            Assert.NotNull(productInformation.Id);
-            Assert.IsNotEmpty(productInformation.Id);
-            Assert.AreEqual(productName, productInformation.Name);
-            Assert.AreEqual(productDescription, productInformation.Description);
-            Assert.AreEqual(productPrice, productInformation.Price);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
         }
 
         [Test]
@@ -94,9 +119,10 @@ namespace Sello.Tests.Integration.Tests
         {
             // Arrange
             const string productId = "I-DO-NOT-EXIST";
+            var selloService = new SelloService();
 
             // Act
-            var response = await _selloService.GetResponseAsync($"{ProductService.BaseUrl}/{productId}");
+            var response = await selloService.GetResponseAsync($"{ProductService.BaseUrl}/{productId}");
 
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);

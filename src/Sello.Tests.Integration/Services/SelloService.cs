@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -12,13 +13,30 @@ namespace Sello.Tests.Integration.Services
     {
         private const string ApiBaseUrlSettingName = "Common.Api.BasePath";
         private const string JsonContentType = "application/json";
+        private const string UnleasheChaosMonkeysCustomHeader = "X-Inject-Chaos-Monkey";
         private readonly HttpClient _httpClient = new HttpClient();
+
+        private readonly bool _chaosMonkeysUnleashed;
+
+        public SelloService() : this(unleashChaosMonkeys: false)
+        {
+        }
+
+        public SelloService(bool unleashChaosMonkeys)
+        {
+            _chaosMonkeysUnleashed = unleashChaosMonkeys;
+        }
 
         public async Task<HttpResponseMessage> GetResponseAsync(string uriPath)
         {
             var url = GetUrl(uriPath);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
+            if (_chaosMonkeysUnleashed)
+            {
+                request.Headers.Add(UnleasheChaosMonkeysCustomHeader, Guid.NewGuid().ToString());
+            }
+
             var response = await _httpClient.SendAsync(request);
             return response;
         }
@@ -33,10 +51,21 @@ namespace Sello.Tests.Integration.Services
                 Content = new StringContent(rawRequestContent, Encoding.UTF8, JsonContentType)
             };
 
+            if (_chaosMonkeysUnleashed)
+            {
+                request.Headers.Add(UnleasheChaosMonkeysCustomHeader, Guid.NewGuid().ToString());
+            }
+
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonContentType));
 
             var response = await _httpClient.SendAsync(request);
             return response;
+        }
+
+        private string GetApiBaseUrl()
+        {
+            var apiBaseUrl = ConfigurationManager.AppSettings[ApiBaseUrlSettingName];
+            return apiBaseUrl;
         }
 
         private string GetUrl(string uriPath)
@@ -44,12 +73,6 @@ namespace Sello.Tests.Integration.Services
             var baseUrl = GetApiBaseUrl();
             var url = Url.Combine(baseUrl, uriPath);
             return url;
-        }
-
-        private string GetApiBaseUrl()
-        {
-            var apiBaseUrl = ConfigurationManager.AppSettings[ApiBaseUrlSettingName];
-            return apiBaseUrl;
         }
     }
 }
