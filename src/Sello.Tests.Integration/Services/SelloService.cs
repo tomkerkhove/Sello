@@ -12,11 +12,16 @@ namespace Sello.Tests.Integration.Services
     public class SelloService
     {
         private const string ApiBaseUrlSettingName = "Common.Api.BasePath";
+        private const string ApiManagementAuthenticationKeyHeaderName = "ocp-apim-subscription-key";
+
+        private const string ApiManagementAuthenticationKeySettingName = "Common.Api.Authenticationheader";
+
+        private const string EnvironmentSettingName = "Common.Environment";
         private const string JsonContentType = "application/json";
         private const string UnleasheChaosMonkeysCustomHeader = "X-Inject-Chaos-Monkey";
-        private readonly HttpClient _httpClient = new HttpClient();
 
         private readonly bool _chaosMonkeysUnleashed;
+        private readonly HttpClient _httpClient = new HttpClient();
 
         public SelloService() : this(unleashChaosMonkeys: false)
         {
@@ -35,6 +40,11 @@ namespace Sello.Tests.Integration.Services
             if (_chaosMonkeysUnleashed)
             {
                 request.Headers.Add(UnleasheChaosMonkeysCustomHeader, Guid.NewGuid().ToString());
+            }
+
+            if (!IsLocalTest())
+            {
+                ConfigureApiManagementAuthentication(request);
             }
 
             var response = await _httpClient.SendAsync(request);
@@ -56,10 +66,21 @@ namespace Sello.Tests.Integration.Services
                 request.Headers.Add(UnleasheChaosMonkeysCustomHeader, Guid.NewGuid().ToString());
             }
 
+            if (!IsLocalTest())
+            {
+                ConfigureApiManagementAuthentication(request);
+            }
+
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonContentType));
 
             var response = await _httpClient.SendAsync(request);
             return response;
+        }
+
+        private static void ConfigureApiManagementAuthentication(HttpRequestMessage request)
+        {
+            var apiManagementAuthenticationKey = ConfigurationManager.AppSettings[ApiManagementAuthenticationKeySettingName];
+            request.Headers.Add(ApiManagementAuthenticationKeyHeaderName, apiManagementAuthenticationKey);
         }
 
         private string GetApiBaseUrl()
@@ -73,6 +94,12 @@ namespace Sello.Tests.Integration.Services
             var baseUrl = GetApiBaseUrl();
             var url = Url.Combine(baseUrl, uriPath);
             return url;
+        }
+
+        private bool IsLocalTest()
+        {
+            var environment = ConfigurationManager.AppSettings[EnvironmentSettingName];
+            return environment.Equals("local", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
