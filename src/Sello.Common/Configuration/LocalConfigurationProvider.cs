@@ -18,15 +18,20 @@ namespace Sello.Common.Configuration
             return environment;
         }
 
-        public string GetSetting(string settingName)
+        public string GetSetting(string settingName, bool isMandatory)
         {
             var rawSetting = ConfigurationManager.AppSettings[settingName];
-            if (string.IsNullOrWhiteSpace(rawSetting))
+            if (string.IsNullOrWhiteSpace(rawSetting) && isMandatory)
             {
                 throw new SettingNotFoundException(settingName);
             }
 
             return rawSetting;
+        }
+
+        public string GetSetting(string settingName)
+        {
+            return GetSetting(settingName, isMandatory: true);
         }
 
         public bool IsCurrentEnvironment(Environment environment)

@@ -8,6 +8,15 @@ Everything is deployed automatically on a per-tenant level and is backed by Visu
 
 ![Scenario](./docs/scenario.png)
 
+## Simulating failures
+For the sake of the demo you can simulate API failures by unleashing the chaos monkeys.
+
+This can be achieved via:
+- Configuring the `Demo.UnleashChaosMonkey` application setting to `true` on the API
+- Sending the `X-Inject-Chaos-Monkey` custom header with a bogus value
+
+This will result in operations throwing exceptions and the health endpoint to fail
+
 ## API Overview
 Sello exposes all their APIs via API Management in order to decouple the physical API from the endpoints that their customers are using.
 
@@ -37,9 +46,10 @@ This can be achieved as following:
 Import-AzureRmApiManagementSwaggerDefinition.ps1 -apiManagementInstanceName "<instance-name>" -resourceGroupName "<resource-group-name>" -swaggerDefinitionPath "<swagger-definition-path>" -apiId "<api-management-api-id>" -apiUrlSuffix "<logical-api-suffix>" -apiUrl "<url-physical-api>" -apiDefaultName "<default-api-name-in-swagger-definition>" -apiName "<desired-logical-api-name>"
 ```
 
-Next to we automatically apply policies on a product-level:
+Policies can be applied to both products and operations.
+Here is how you automatically apply policies on a product-level:
 ```PowerShell
-Set-AzureRmApiManagementPolicy.ps1 -apiManagementInstanceName "<instance-name>" -resourceGroupName "<resource-group-name>" -policyDefinitionPath "<policy-definition-path>" -productId "<api-management-product-id>"
+Set-AzureRmApiManagementPolicy.ps1 -apiManagementInstanceName "<instance-name>" -resourceGroupName "<resource-group-name>" -policyDefinitionPath "<policy-definition-path>" -policyType "product" -productId "<api-management-product-id>"
 ```
 
 ## License Information
