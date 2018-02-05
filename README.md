@@ -24,13 +24,14 @@ This also enables them to only expose the APIs that 3rd parties need and keep th
 
 In Azure API Management we have the following setup:
 
-|                             |**3rd Party**              |**Management**                                          |
-|:----------------------------|:-------------------------:|:------------------------------------------------------:|
-|Product Name                 |Sello                      |Sello Management                                        |
-|Published in Developer Portal|:white_check_mark:         |:x:                                                     |
-|Subscription Required        |:white_check_mark:         |:white_check_mark:                                      |
-|Subscription Approval        |:white_check_mark:         |:white_check_mark:                                      |
-|API(s)                       |<ul><li>Sello API</li></ul>|<ul><li>Sello API</li><li>Sello Management API</li></ul>|
+|                             |**3rd Party**                     |**Management**                                          |**Operations**                             |
+|:----------------------------|:--------------------------------:|:------------------------------------------------------:|------------------------------------------:|
+|Product Name                 |Sello (Free & Premium)            |Sello - Management                                      |Sello - Operations                         |
+|Published in Developer Portal|:white_check_mark:                |:x:                                                     |:x:                                        |
+|Subscription Required        |:white_check_mark:                |:white_check_mark:                                      |:white_check_mark:                         |
+|Subscription Approval        |:white_check_mark:                |:white_check_mark:                                      |:x:                                        |
+|Throttling                   |:white_check_mark:, Product-level |:x:                                                     |:white_check_mark:, only on health-endpoint|
+|API(s)                       |<ul><li>Sello API</li></ul>       |<ul><li>Sello API</li><li>Sello Management API</li></ul>|<ul><li>Sello Operations API</li></ul>     |
 
 These will communicate with the physical API that is hosted in an Azure Web App.
 
