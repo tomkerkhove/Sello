@@ -9,7 +9,6 @@ namespace Sello.Tests.Integration.Tests
     public class HealthTests
     {
         [Test]
-        [Category("Smoke")]
         public async Task Health_ApiShouldBeHealthy_ShouldReturnHttpOk()
         {
             // Arrange
