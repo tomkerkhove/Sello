@@ -8,15 +8,6 @@ Everything is deployed automatically on a per-tenant level and is backed by Visu
 
 ![Scenario](./docs/scenario.png)
 
-## Simulating failures
-For the sake of the demo you can simulate API failures by unleashing the chaos monkeys.
-
-This can be achieved via:
-- Configuring the `Demo.UnleashChaosMonkey` application setting to `true` on the API
-- Sending the `X-Inject-Chaos-Monkey` custom header with a bogus value
-
-This will result in operations throwing exceptions and the health endpoint to fail
-
 ## API Overview
 Sello exposes all their APIs via API Management in order to decouple the physical API from the endpoints that their customers are using.
 
@@ -52,6 +43,15 @@ Here is how you automatically apply policies on a product-level:
 ```PowerShell
 Set-AzureRmApiManagementPolicy.ps1 -apiManagementInstanceName "<instance-name>" -resourceGroupName "<resource-group-name>" -policyDefinitionPath "<policy-definition-path>" -policyType "product" -productId "<api-management-product-id>"
 ```
+
+## Simulating failures
+For the sake of the demo you can simulate API failures by unleashing the chaos monkeys.
+
+This can be achieved via:
+- Configuring the `Demo.UnleashChaosMonkey` application setting to `true` on the API
+- Sending the `X-Inject-Chaos-Monkey` custom header with a bogus value
+
+This will result in operations throwing exceptions and the health endpoint to fail
 
 ## License Information
 This is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the web application. But you always need to state that Codit is the original author of this web application.
