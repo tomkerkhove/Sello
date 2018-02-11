@@ -2,9 +2,9 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7s8flv5ebqh6j3vv?svg=true)](https://ci.appveyor.com/project/tomkerkhove/sello-bmhc3) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/tomkerkhove/sello/blob/master/LICENSE)
 
-Sello is a fictious company that is running a multi-tenant SaaS platform for selling products.
+Sello is a fictious company that is running a SaaS platform for selling products.
 
-Everything is deployed automatically on a per-tenant level and is backed by Visual Studio Team Services Release Management
+Everything is deployed automatically through all stages by using [Visual Studio Team Services Release Management](https://www.visualstudio.com/team-services/continuous-integration/).
 
 ![Scenario](./docs/scenario.png)
 
