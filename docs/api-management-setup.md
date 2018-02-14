@@ -11,36 +11,36 @@ Every Id is placeholdered with `<env>` which represents the environment.
 ## APIs
 
 - **Public API**
-    - Id: api-sello-public-<env>
+    - Id: `api-sello-public-<env>`
     - Name: Sello API
     - Description: APIs exposed by the Sello platform
 	- Uri Path: sello
 - **Management API**
-    - Id: api-sello-management-<env>
+    - Id: `api-sello-management-<env>`
     - Name: Sello API - Management
     - Description: APIs exposed by the Sello platform
 	- Uri Path: sello/management
 - **Operations API**
-    - Id: api-sello-operations-<env>
+    - Id: `api-sello-operations-<env>`
     - Name: Sello API - Operations
     - Description: APIs exposed by the Sello platform
     - Uri Path: sello/operations
 
 ## Products
 - **Free product**
-    - Id: product-sello-free-<env>
+    - Id: `product-sello-free-<env>`
     - Name: Sello - Free Plan
     - Description: Free Pricing Plan to try out the API
 - **Premium Product**
-    - Id: product-sello-premium-<env>
+    - Id: `product-sello-premium-<env>`
     - Name: Sello - Premium Plan
     - Description: Premium pricing plan to try out the API
 - **Management Product**
-    - Id: product-sello-management-<env>
+    - Id: `product-sello-management-<env>`
     - Name: Sello - Management
     - Description: Internal APIs for managing the Sello platform
 - **Operations Product**
-    - Id: product-sello-operations-<env>
+    - Id: `product-sello-operations-<env>`
     - Name: Sello - Operations
     - Description: Product representing all operational APIs for Sello
 
