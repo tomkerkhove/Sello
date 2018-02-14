@@ -6,7 +6,7 @@ Sello is a fictious company that is running a SaaS platform for selling products
 
 Everything is deployed automatically through all stages by using [Visual Studio Team Services Release Management](https://www.visualstudio.com/team-services/continuous-integration/).
 
-![Scenario](./docs/scenario.png)
+![Scenario](./media/scenario.png)
 
 ## API Overview
 Sello exposes all their APIs via API Management in order to decouple the physical API from the endpoints that their customers are using.
@@ -29,6 +29,8 @@ These will communicate with the physical API that is hosted in an Azure Web App.
 |:rotating_light: **Security**                                                                        |
 |-----------------------------------------------------------------------------------------------------|
 | For the sake of the demo there are some gaps in API security:<ul><li>Physical API has no authentication and authorization</li><li>Physical API is publically reachable</li><li>No security between Azure API Management & the physical API</li></ul>This is not safe for production workloads and thus not recommended.|
+
+You can find the details of the setup [here](./docs/api-management-setup.md).
 
 ### Automating Azure API Management
 We are currently automatically importing the Swagger specification for both the public & management API.
