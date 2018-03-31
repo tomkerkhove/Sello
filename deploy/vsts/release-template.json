@@ -1,0 +1,665 @@
+{
+	"source": 2,
+	"id": 1,
+	"revision": 38,
+	"name": "Release - API",
+	"description": null,
+	"createdBy": {
+		"id": "a49087b5-2d34-4800-836f-1d572edafcfd",
+		"uniqueName": "tom.kerkhove@hotmail.com",
+		"imageUrl": "https://tomkerkhove.visualstudio.com/_api/_common/identityImage?id=a49087b5-2d34-4800-836f-1d572edafcfd&t=00000000-0000-0000-602d-93d5eb6cd508",
+		"displayName": "Tom Kerkhove",
+		"url": "https://app.vssps.visualstudio.com/Ae91c526a-040b-4d91-aad1-99ce93d16c9b/_apis/Identities/a49087b5-2d34-4800-836f-1d572edafcfd"
+	},
+	"createdOn": "2017-12-29T14:28:33.683Z",
+	"modifiedBy": {
+		"id": "a49087b5-2d34-4800-836f-1d572edafcfd",
+		"uniqueName": "tom.kerkhove@hotmail.com",
+		"imageUrl": "https://tomkerkhove.visualstudio.com/_api/_common/identityImage?id=a49087b5-2d34-4800-836f-1d572edafcfd&t=00000000-0000-0000-602d-93d5eb6cd508",
+		"displayName": "Tom Kerkhove",
+		"url": "https://app.vssps.visualstudio.com/Ae91c526a-040b-4d91-aad1-99ce93d16c9b/_apis/Identities/a49087b5-2d34-4800-836f-1d572edafcfd"
+	},
+	"modifiedOn": "2018-02-05T23:46:39.670Z",
+	"isDeleted": false,
+	"path": "\\",
+	"variables": {
+		"Artifact.Location": {
+			"value": "$(System.DefaultWorkingDirectory)/API-Package/API"
+		},
+		"Artifact.Location.ApiMangement": {
+			"value": "$(Artifact.Location)/Azure-Api-Management/"
+		},
+		"Artifact.Location.ApiMangement.Policies": {
+			"value": "$(Artifact.Location.ApiMangement)/Policies/"
+		},
+		"Artifact.Location.ApiMangement.Scripts": {
+			"value": "$(Artifact.Location.ApiMangement)/Scripts/"
+		},
+		"Artifact.Location.Database": {
+			"value": "$(Artifact.Location)/Database/"
+		},
+		"Artifact.Location.Database.Tools": {
+			"value": "$(Artifact.Location.Database)/Tools/"
+		},
+		"Artifact.Location.Swagger": {
+			"value": "$(Artifact.Location)/Swagger"
+		},
+		"Plans.Free.Throttling.MaxCalls": {
+			"value": "10"
+		},
+		"Plans.Free.Throttling.RenewalPeriod": {
+			"value": "60"
+		},
+		"Plans.Premium.Throttling.MaxCalls": {
+			"value": "10000"
+		},
+		"Plans.Premium.Throttling.RenewalPeriod": {
+			"value": "60"
+		}
+	},
+	"variableGroups": [],
+	"environments": [{
+		"id": 1,
+		"name": "DEV",
+		"rank": 1,
+		"owner": {
+			"id": "a49087b5-2d34-4800-836f-1d572edafcfd",
+			"uniqueName": "tom.kerkhove@hotmail.com",
+			"imageUrl": "https://tomkerkhove.visualstudio.com/_api/_common/identityImage?id=a49087b5-2d34-4800-836f-1d572edafcfd&t=00000000-0000-0000-602d-93d5eb6cd508",
+			"displayName": "Tom Kerkhove",
+			"url": "https://app.vssps.visualstudio.com/Ae91c526a-040b-4d91-aad1-99ce93d16c9b/_apis/Identities/a49087b5-2d34-4800-836f-1d572edafcfd"
+		},
+		"variables": {
+			"Api.DeploymentPassword": {
+				"value": null,
+				"isSecret": true
+			},
+			"ApplicationInsights.ApiKey": {
+				"value": null,
+				"isSecret": true
+			},
+			"Common.Api.Authenticationheader": {
+				"value": null,
+				"isSecret": true
+			},
+			"Common.Api.BasePath": {
+				"value": "https://sello.azure-api.net/sello/preview/"
+			},
+			"Common.Environment": {
+				"value": "Dev"
+			},
+			"Security.KeyVault.Uri": {
+				"value": "https://sello-dev-we-codito.vault.azure.net/"
+			},
+			"Sql.ConnectionString": {
+				"value": null,
+				"isSecret": true
+			},
+			"Telemetry.Key": {
+				"value": null,
+				"isSecret": true
+			}
+		},
+		"variableGroups": [],
+		"preDeployApprovals": {
+			"approvals": [{
+				"rank": 1,
+				"isAutomated": true,
+				"isNotificationOn": false,
+				"id": 1
+			}],
+			"approvalOptions": {
+				"requiredApproverCount": null,
+				"releaseCreatorCanBeApprover": false,
+				"autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+				"enforceIdentityRevalidation": false,
+				"timeoutInMinutes": 0,
+				"executionOrder": 1
+			}
+		},
+		"deployStep": {
+			"id": 2
+		},
+		"postDeployApprovals": {
+			"approvals": [{
+				"rank": 1,
+				"isAutomated": true,
+				"isNotificationOn": false,
+				"id": 3
+			}],
+			"approvalOptions": {
+				"requiredApproverCount": null,
+				"releaseCreatorCanBeApprover": false,
+				"autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+				"enforceIdentityRevalidation": false,
+				"timeoutInMinutes": 0,
+				"executionOrder": 2
+			}
+		},
+		"deployPhases": [{
+			"deploymentInput": {
+				"parallelExecution": {
+					"parallelExecutionType": "none"
+				},
+				"skipArtifactsDownload": false,
+				"artifactsDownloadInput": {
+					"downloadInputs": []
+				},
+				"queueId": 42,
+				"demands": [],
+				"enableAccessToken": false,
+				"timeoutInMinutes": 0,
+				"jobCancelTimeoutInMinutes": 1,
+				"condition": "succeeded()",
+				"overrideInputs": {
+					
+				}
+			},
+			"rank": 1,
+			"phaseType": 1,
+			"name": "Agent phase",
+			"workflowTasks": [{
+				"taskId": "a8515ec8-7254-4ffd-912c-86772e2b5962",
+				"version": "2.*",
+				"name": "Replace Tokens - Settings",
+				"refName": "replacetokens2",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"rootDirectory": "$(Artifact.Location)/Settings/",
+					"targetFiles": "DEV.SetParameters.xml",
+					"encoding": "auto",
+					"writeBOM": "true",
+					"actionOnMissing": "fail",
+					"keepToken": "false",
+					"tokenPrefix": "#{",
+					"tokenSuffix": "}#",
+					"emptyValue": "(empty)"
+				}
+			},
+			{
+				"taskId": "a8515ec8-7254-4ffd-912c-86772e2b5962",
+				"version": "2.*",
+				"name": "Replace Tokens - Smoke Test Configuration",
+				"refName": "replacetokens2",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"rootDirectory": "$(System.DefaultWorkingDirectory)/API-Package/API/Testing/Smoke/",
+					"targetFiles": "Sello.Tests.Integration.dll.config",
+					"encoding": "auto",
+					"writeBOM": "true",
+					"actionOnMissing": "fail",
+					"keepToken": "false",
+					"tokenPrefix": "#{",
+					"tokenSuffix": "}#",
+					"emptyValue": "(empty)"
+				}
+			},
+			{
+				"taskId": "a8515ec8-7254-4ffd-912c-86772e2b5962",
+				"version": "2.*",
+				"name": "Replace Tokens - API Management Policies",
+				"refName": "Clonedreplacetokens21",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"rootDirectory": "$(Artifact.Location.ApiMangement.Policies)",
+					"targetFiles": "free-plan/*.xml\npremium-plan/*.xml",
+					"encoding": "auto",
+					"writeBOM": "true",
+					"actionOnMissing": "fail",
+					"keepToken": "false",
+					"tokenPrefix": "#{",
+					"tokenSuffix": "}#",
+					"emptyValue": "(empty)"
+				}
+			},
+			{
+				"taskId": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+				"version": "1.*",
+				"name": "Migrate Database",
+				"refName": "PowerShell6",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"scriptType": "filePath",
+					"scriptName": "$(Artifact.Location.Database)/Scripts/Migrate-Database.ps1",
+					"arguments": "-connectionString \"$(Sql.ConnectionString)\" -databaseContextDll \"$(Artifact.Location.Database)\\Model\\Sello.Datastore.SQL.dll\" -migrateToolPath $(Artifact.Location.Database.Tools)\\migrate.exe",
+					"workingFolder": "",
+					"inlineScript": "# You can write your powershell scripts inline here. \n# You can also pass predefined and custom variables to this scripts using arguments\n\n Write-Host \"Hello World\"",
+					"failOnStandardError": "true"
+				}
+			},
+			{
+				"taskId": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+				"version": "1.*",
+				"name": "Deploy API",
+				"refName": "CmdLine1",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"filename": "%programfiles%\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe",
+					"arguments": " -source:package=\"$(Artifact.Location)\\Package\\Sello.Api.zip\" -dest:auto,ComputerName=\"https://sello-dev-we-api-codito.scm.azurewebsites.net:443/msdeploy.axd\",UserName=\"$sello-dev-we-api-codito\",Password=\"$(Api.DeploymentPassword)\",IncludeAcls=\"False\",AuthType=\"Basic\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"$(Artifact.Location)\\Settings\\DEV.SetParameters.xml\" -setParam:\"IIS Web Application Name\"=\"sello-dev-we-api-codito\"",
+					"workingFolder": "",
+					"failOnStandardError": "false"
+				}
+			},
+			{
+				"taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+				"version": "2.*",
+				"name": "Import Swagger Definition - Public API",
+				"refName": "AzurePowerShell1",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+					"ConnectedServiceName": "",
+					"ConnectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+					"ScriptType": "FilePath",
+					"ScriptPath": "$(Artifact.Location.ApiMangement.Scripts)/Import-AzureRmApiManagementSwaggerDefinition.ps1",
+					"Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+					"ScriptArguments": "-apiManagementInstanceName \"sello\" -resourceGroupName \"sello-shd-platform\" -swaggerDefinitionPath \"$(Artifact.Location.Swagger)/public-api.json\" -apiId \"api-sello-public-dev\" -apiUrlSuffix \"sello/preview\" -apiUrl \"sello-dev-we-api-codito.azurewebsites.net\" -apiDefaultName \"Sello API\" -apiName \"Sello API (Preview)\"",
+					"TargetAzurePs": "LatestVersion",
+					"CustomTargetAzurePs": ""
+				}
+			},
+			{
+				"taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+				"version": "2.*",
+				"name": "Import Swagger Definition - Management API",
+				"refName": "ClonedAzurePowerShell12",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+					"ConnectedServiceName": "",
+					"ConnectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+					"ScriptType": "FilePath",
+					"ScriptPath": "$(Artifact.Location.ApiMangement.Scripts)/Import-AzureRmApiManagementSwaggerDefinition.ps1",
+					"Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+					"ScriptArguments": "-apiManagementInstanceName \"sello\" -resourceGroupName \"sello-shd-platform\" -swaggerDefinitionPath \"$(Artifact.Location.Swagger)/management-api.json\" -apiId \"api-sello-management-dev\" -apiUrlSuffix \"sello/preview/management\" -apiUrl \"sello-dev-we-api-codito.azurewebsites.net\" -apiDefaultName \"Sello API - Management\" -apiName \"Sello API - Management (Preview)\"",
+					"TargetAzurePs": "LatestVersion",
+					"CustomTargetAzurePs": ""
+				}
+			},
+			{
+				"taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+				"version": "2.*",
+				"name": "Import Swagger Definition - Operations API",
+				"refName": "ClonedAzurePowerShell12",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+					"ConnectedServiceName": "",
+					"ConnectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+					"ScriptType": "FilePath",
+					"ScriptPath": "$(Artifact.Location.ApiMangement.Scripts)/Import-AzureRmApiManagementSwaggerDefinition.ps1",
+					"Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+					"ScriptArguments": "-apiManagementInstanceName \"sello\" -resourceGroupName \"sello-shd-platform\" -swaggerDefinitionPath \"$(Artifact.Location.Swagger)/operations-api.json\" -apiId \"api-sello-operations-dev\" -apiUrlSuffix \"sello/preview/operations\" -apiUrl \"sello-dev-we-api-codito.azurewebsites.net\" -apiDefaultName \"Sello API - Operations\" -apiName \"Sello API - Operations (Preview)\"",
+					"TargetAzurePs": "LatestVersion",
+					"CustomTargetAzurePs": ""
+				}
+			},
+			{
+				"taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+				"version": "2.*",
+				"name": "Import Policy Definition - Free Plan",
+				"refName": "ClonedClonedAzurePowerShell123",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+					"ConnectedServiceName": "",
+					"ConnectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+					"ScriptType": "FilePath",
+					"ScriptPath": "$(Artifact.Location.ApiMangement.Scripts)/Set-AzureRmApiManagementPolicy.ps1",
+					"Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+					"ScriptArguments": "-apiManagementInstanceName \"sello\" -resourceGroupName \"sello-shd-platform\" -policyType product -policyDefinitionPath \"$(Artifact.Location.ApiMangement.Policies)/free-plan/product.xml\" -productId \"product-sello-free-dev\"",
+					"TargetAzurePs": "LatestVersion",
+					"CustomTargetAzurePs": ""
+				}
+			},
+			{
+				"taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+				"version": "2.*",
+				"name": "Import Policy Definition - Premium Plan",
+				"refName": "ClonedClonedClonedAzurePowerShell1235",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+					"ConnectedServiceName": "",
+					"ConnectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+					"ScriptType": "FilePath",
+					"ScriptPath": "$(Artifact.Location.ApiMangement.Scripts)/Set-AzureRmApiManagementPolicy.ps1",
+					"Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+					"ScriptArguments": "-apiManagementInstanceName \"sello\" -resourceGroupName \"sello-shd-platform\" -policyType product -policyDefinitionPath \"$(Artifact.Location.ApiMangement.Policies)/premium-plan/product.xml\" -productId \"product-sello-premium-dev\"",
+					"TargetAzurePs": "LatestVersion",
+					"CustomTargetAzurePs": ""
+				}
+			},
+			{
+				"taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+				"version": "2.*",
+				"name": "Import Policy Definition - Health Operation",
+				"refName": "ClonedClonedClonedAzurePowerShell1235",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+					"ConnectedServiceName": "",
+					"ConnectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+					"ScriptType": "FilePath",
+					"ScriptPath": "$(Artifact.Location.ApiMangement.Scripts)/Set-AzureRmApiManagementPolicy.ps1",
+					"Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+					"ScriptArguments": "-apiManagementInstanceName \"sello\" -resourceGroupName \"sello-shd-platform\" -policyType operation -policyDefinitionPath \"$(Artifact.Location.ApiMangement.Policies)/operations/health-endpoint.xml\" -apiId \"api-sello-operations-dev\" -operationId \"5a78b5dd3841360cb078a8e0\"",
+					"TargetAzurePs": "LatestVersion",
+					"CustomTargetAzurePs": ""
+				}
+			},
+			{
+				"taskId": "f1d5ce28-3e2d-4525-8cb5-4fa428cba643",
+				"version": "1.*",
+				"name": "Azure Application Insights - Release Annotation",
+				"refName": "Task11",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"applicationId": "0cc16144-9913-4164-ae14-82917faaa624",
+					"apiKey": "$(ApplicationInsights.ApiKey)"
+				}
+			},
+			{
+				"taskId": "ef087383-ee5e-42c7-9a53-ab56c98420f9",
+				"version": "2.*",
+				"name": "Run Smoke Tests",
+				"refName": "Task11",
+				"enabled": true,
+				"alwaysRun": false,
+				"continueOnError": false,
+				"timeoutInMinutes": 0,
+				"definitionType": "task",
+				"overrideInputs": {
+					
+				},
+				"condition": "succeeded()",
+				"inputs": {
+					"testSelector": "testAssemblies",
+					"testAssemblyVer2": "Sello.Tests.Integration.dll",
+					"testPlan": "",
+					"testSuite": "",
+					"testConfiguration": "",
+					"tcmTestRun": "$(test.RunId)",
+					"searchFolder": "$(Artifact.Location)\\Testing\\Smoke",
+					"testFiltercriteria": "TestCategory=Smoke",
+					"runOnlyImpactedTests": "False",
+					"runAllTestsAfterXBuilds": "50",
+					"uiTests": "false",
+					"vstestLocationMethod": "version",
+					"vsTestVersion": "latest",
+					"vstestLocation": "",
+					"runSettingsFile": "",
+					"overrideTestrunParameters": "",
+					"pathtoCustomTestAdapters": "$(Artifact.Location)\\Testing\\Adapter",
+					"runInParallel": "False",
+					"runTestsInIsolation": "False",
+					"codeCoverageEnabled": "False",
+					"otherConsoleOptions": "",
+					"distributionBatchType": "basedOnTestCases",
+					"batchingBasedOnAgentsOption": "autoBatchSize",
+					"customBatchSizeValue": "10",
+					"batchingBasedOnExecutionTimeOption": "autoBatchSize",
+					"customRunTimePerBatchValue": "60",
+					"dontDistribute": "False",
+					"testRunTitle": "",
+					"platform": "",
+					"configuration": "",
+					"publishRunAttachments": "true",
+					"rerunFailedTests": "False",
+					"rerunFailedThreshold": "30",
+					"rerunMaxAttempts": "3"
+				}
+			}]
+		}],
+		"environmentOptions": {
+			"emailNotificationType": "OnlyOnFailure",
+			"emailRecipients": "release.environment.owner;release.creator",
+			"skipArtifactsDownload": false,
+			"timeoutInMinutes": 0,
+			"enableAccessToken": false,
+			"publishDeploymentStatus": true,
+			"autoLinkWorkItems": false
+		},
+		"demands": [],
+		"conditions": [{
+			"name": "ReleaseStarted",
+			"conditionType": 1,
+			"value": ""
+		}],
+		"executionPolicy": {
+			"concurrencyCount": 0,
+			"queueDepthCount": 0
+		},
+		"schedules": [],
+		"retentionPolicy": {
+			"daysToKeep": 30,
+			"releasesToKeep": 3,
+			"retainBuild": true
+		},
+		"processParameters": {
+			
+		},
+		"properties": {
+			
+		},
+		"preDeploymentGates": {
+			"id": 0,
+			"gatesOptions": {
+				"isEnabled": false,
+				"timeout": 1440,
+				"samplingInterval": 15,
+				"stabilizationTime": 15
+			},
+			"gates": []
+		},
+		"postDeploymentGates": {
+			"id": 4,
+			"gatesOptions": {
+				"isEnabled": true,
+				"timeout": 15,
+				"samplingInterval": 5,
+				"stabilizationTime": 5
+			},
+			"gates": [{
+				"tasks": [{
+					"taskId": "99a72e7f-25e4-4576-bf38-22a42b995ed8",
+					"version": "0.*",
+					"name": "API Exceptions",
+					"enabled": true,
+					"alwaysRun": false,
+					"continueOnError": false,
+					"timeoutInMinutes": 0,
+					"definitionType": "task",
+					"overrideInputs": {
+						
+					},
+					"condition": "succeeded()",
+					"inputs": {
+						"connectedServiceNameARM": "16b7aba2-1500-49ba-9ab7-353151f947fb",
+						"ResourceGroupName": "sello-platform-dev",
+						"ResourceType": "Microsoft.Insights/components",
+						"resourceName": "sello-dev-we-runtime-codito",
+						"alertRules": "Exceptions"
+					}
+				}]
+			},
+			{
+				"tasks": [{
+					"taskId": "9c3e8943-130d-4c78-ac63-8af81df62dfb",
+					"version": "0.*",
+					"name": "Get API Health",
+					"enabled": true,
+					"alwaysRun": false,
+					"continueOnError": false,
+					"timeoutInMinutes": 0,
+					"definitionType": "task",
+					"overrideInputs": {
+						
+					},
+					"condition": "succeeded()",
+					"inputs": {
+						"connectedServiceName": "8f914a23-ec99-4024-9d38-c6ab3cd9319c",
+						"method": "GET",
+						"headers": "",
+						"body": "",
+						"waitForCompletion": "false"
+					}
+				}]
+			}]
+		}
+	}],
+	"artifacts": [{
+		"sourceId": "7b780188-2250-4080-866b-5c9866fbc4e2:13",
+		"type": "Build",
+		"alias": "API-Package",
+		"definitionReference": {
+			"artifactSourceDefinitionUrl": {
+				"id": "https://tomkerkhove.visualstudio.com/_permalink/_build/index?collectionId=919b3ee3-fa50-48c1-97fa-e69a31942c5a&projectId=7b780188-2250-4080-866b-5c9866fbc4e2&definitionId=13",
+				"name": ""
+			},
+			"defaultVersionBranch": {
+				"id": "",
+				"name": ""
+			},
+			"defaultVersionSpecific": {
+				"id": "",
+				"name": ""
+			},
+			"defaultVersionTags": {
+				"id": "",
+				"name": ""
+			},
+			"defaultVersionType": {
+				"id": "latestType",
+				"name": "Latest"
+			},
+			"definition": {
+				"id": "13",
+				"name": "Release API"
+			},
+			"project": {
+				"id": "7b780188-2250-4080-866b-5c9866fbc4e2",
+				"name": "Sello"
+			}
+		},
+		"isPrimary": true
+	}],
+	"triggers": [{
+		"artifactAlias": "API-Package",
+		"triggerConditions": [],
+		"triggerType": 1
+	}],
+	"releaseNameFormat": "Release-API-v$(Build.BuildNumber)-$(rev:r)",
+	"url": "https://tomkerkhove.vsrm.visualstudio.com/7b780188-2250-4080-866b-5c9866fbc4e2/_apis/Release/definitions/1",
+	"_links": {
+		"self": {
+			"href": "https://tomkerkhove.vsrm.visualstudio.com/7b780188-2250-4080-866b-5c9866fbc4e2/_apis/Release/definitions/1"
+		},
+		"web": {
+			"href": "https://tomkerkhove.visualstudio.com/7b780188-2250-4080-866b-5c9866fbc4e2/_release?definitionId=1"
+		}
+	},
+	"tags": [],
+	"properties": {
+		"DefinitionCreationSource": {
+			"$type": "System.String",
+			"$value": "ReleaseNew"
+		}
+	}
+}
