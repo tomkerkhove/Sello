@@ -28,11 +28,12 @@ namespace Sello.Api.Controllers
         }
 
         /// <summary>
-        ///     Gets a list of all products
+        ///     Get All Products
         /// </summary>
+        /// <remarks>Gets a list of all products</remarks>
         [HttpGet]
         [Route("product")]
-        [SwaggerOperation("Get All Products")]
+        [SwaggerOperation("get-all-products")]
         [SwaggerResponse(HttpStatusCode.OK, "A list of all products", typeof(List<ProductInformationContract>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
             "The request could not be completed successfully, please try again.")]
@@ -55,11 +56,12 @@ namespace Sello.Api.Controllers
         }
 
         /// <summary>
-        ///     Gets the details for a specific product in the catalog
+        ///     Get Product
         /// </summary>
+        /// <remarks>Gets the details for a specific product in the catalog</remarks>
         [HttpGet]
         [Route("product/{productId}")]
-        [SwaggerOperation("Get Product")]
+        [SwaggerOperation("get-product")]
         [SwaggerResponse(HttpStatusCode.OK, "Details about a product", typeof(ProductInformationContract))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Product not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,
@@ -87,11 +89,12 @@ namespace Sello.Api.Controllers
         }
 
         /// <summary>
-        ///     Add a new product to the catalog a list of all products
+        ///     Add New Product
         /// </summary>
+        /// <remarks>Add a new product to the catalog a list of all products</remarks>
         [HttpPost]
         [Route("product")]
-        [SwaggerOperation("Add New Product")]
+        [SwaggerOperation("add-new-product")]
         [SwaggerResponse(HttpStatusCode.Created, "Information about the added product", typeof(NewProductContract))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "No valid product was specified.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError,

@@ -13,11 +13,12 @@ namespace Sello.Api.Controllers
         }
 
         /// <summary>
-        ///     Gets the current health status of the API
+        ///     Get Health
         /// </summary>
+        /// <remarks>Gets the current health status of the API</remarks>
         [HttpGet]
         [Route("health")]
-        [SwaggerOperation("Get Health")]
+        [SwaggerOperation("get-health")]
         [SwaggerResponse(HttpStatusCode.OK, "API is up & running")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "API is not available")]
 #if MANAGEMENT_API || PUBLIC_API

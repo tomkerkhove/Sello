@@ -6,28 +6,33 @@
     <members>
         <member name="M:Sello.Api.Controllers.HealthController.Get">
             <summary>
-                Gets the current health status of the API
+                Get Health
             </summary>
+            <remarks>Gets the current health status of the API</remarks>
         </member>
         <member name="M:Sello.Api.Controllers.OrdersController.Post(Sello.Api.Contracts.OrderContract)">
             <summary>
-                Creates a new order
+                Create Order
             </summary>
+            <remarks>Creates a new order</remarks>
         </member>
         <member name="M:Sello.Api.Controllers.ProductsController.Get">
             <summary>
-                Gets a list of all products
+                Get All Products
             </summary>
+            <remarks>Gets a list of all products</remarks>
         </member>
         <member name="M:Sello.Api.Controllers.ProductsController.Get(System.String)">
             <summary>
-                Gets the details for a specific product in the catalog
+                Get Product
             </summary>
+            <remarks>Gets the details for a specific product in the catalog</remarks>
         </member>
         <member name="M:Sello.Api.Controllers.ProductsController.Post(Sello.Api.Contracts.NewProductContract)">
             <summary>
-                Add a new product to the catalog a list of all products
+                Add New Product
             </summary>
+            <remarks>Add a new product to the catalog a list of all products</remarks>
         </member>
         <member name="M:Sello.Api.Controllers.RestApiController.ComposeResourceLocation(System.String)">
             <summary>

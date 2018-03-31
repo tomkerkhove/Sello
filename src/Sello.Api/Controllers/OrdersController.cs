@@ -32,11 +32,12 @@ namespace Sello.Api.Controllers
         }
 
         /// <summary>
-        ///     Creates a new order
+        ///     Create Order
         /// </summary>
+        /// <remarks>Creates a new order</remarks>
         [HttpPost]
         [Route("order")]
-        [SwaggerOperation("Create Order")]
+        [SwaggerOperation("create-order")]
         [SwaggerResponse(HttpStatusCode.Created, "Order was created")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Order failed to validate", typeof(List<string>))]
         [SwaggerResponse(HttpStatusCode.NotFound, "Product that was mentioned in the order was not found")]
