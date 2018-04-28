@@ -13,7 +13,7 @@ param
     [string] $subscriptionId = ""
 )
 
-function Autenticate ([string]$subscriptionId) {
+function Authenticate ([string]$subscriptionId) {
     Login-AzureRmAccount
     Set-AzureRmContext -SubscriptionId $subscriptionId
 }
